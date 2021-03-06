@@ -89,7 +89,9 @@ const Home: React.FC = (props) => {
   }
 
   const charge_records = _.get(box, 'charge_records', []);
-  const percent = charge_records.length === 0 ? 0 : parseFloat((100 * charge_records.length) / charges.length).toFixed(2);
+  const charges_done = _.filter(charges, {status: 'done'});
+
+  const percent = charge_records.length === 0 ? 0 : parseFloat((100 * charges_done.length) / charges.length).toFixed(2);
 
   return (
     <>
@@ -109,8 +111,8 @@ const Home: React.FC = (props) => {
           </ProgressCircle>
           <ContainerTextColumn>
             <DescriptionText>Total: {charges.length}</DescriptionText>
-            <DescriptionText>Visitados: {charge_records.length}</DescriptionText>
-            <DescriptionText>Restantes: {charges.length - charge_records.length}</DescriptionText>
+            <DescriptionText>Visitados: {charges_done.length}</DescriptionText>
+            <DescriptionText>Restantes: {charges.length - charges_done.length}</DescriptionText>
           </ContainerTextColumn>
         </ContainerText>
 

@@ -15,6 +15,7 @@ import CollectionRoute from "./pages/CollectionRoute";
 import Collection from "./pages/Collection";
 import Expense from "./pages/Expense";
 import BoxClosed from "./pages/BoxClosed";
+import LateCharges from "./pages/LateCharges";
 import Profile from "./pages/Profile";
 import login from "./services/login";
 import {STORE_TOKEN_ACCESS, STORE_DATA_TOKEN, STORE_PROFILE} from "./utils";
@@ -160,6 +161,7 @@ export default function App() {
               <Stack.Screen name="Expense" component={Expense}/>
               <Stack.Screen name="Collection" component={Collection}/>
               <Stack.Screen name="BoxClosed" component={BoxClosed}/>
+              <Stack.Screen name="LateCharges" component={LateCharges}/>
               <Stack.Screen name="Profile">
                 {props => (<Profile {...props} extraData={{
                   authContext: AuthContext

@@ -6,6 +6,7 @@ import {
 import {Alert, TouchableOpacity} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {STORE_PROFILE} from "../../utils";
+import Config from "../../../package.json";
 
 const Profile: React.FC = (props) => {
 
@@ -73,7 +74,7 @@ const Profile: React.FC = (props) => {
           </BoxLogout>
         </TouchableOpacity>
 
-        <VersionText>Versão: 1.0.0</VersionText>
+        <VersionText>Versão: {Config.version}</VersionText>
       </Container>
     </>
   )
