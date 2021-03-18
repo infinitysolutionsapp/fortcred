@@ -14,9 +14,6 @@ const Profile: React.FC = (props) => {
 
   const loadProfile = async () => {
     const data = await AsyncStorage.getItem(STORE_PROFILE);
-
-    console.log('loadProfile data', data);
-
     setProfile({
       ...JSON.parse(data)
     });
@@ -33,8 +30,6 @@ const Profile: React.FC = (props) => {
     phone: 'Meu número',
     email: 'Email',
   }
-
-  console.log('profile', profile);
 
   return (
     <>

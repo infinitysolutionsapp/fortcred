@@ -10,10 +10,7 @@ import CalendarImg from '../../assets/calendar.png';
 
 import {Title, Item, Container} from './styles'
 
-export default function ItemBox({box, onStartOperationalFlow, onReseteBox}) {
-
-  console.log('ItemBox box', box);
-
+export default function ItemBox({box, onStartOperationalFlow, onReseteBox, onLoadClientsInRoute}) {
   const navigation = useNavigation();
 
   function CollectionRoute() {
@@ -25,7 +22,8 @@ export default function ItemBox({box, onStartOperationalFlow, onReseteBox}) {
 
     navigation.navigate('CollectionRoute', {
       box: box,
-      onStartOperationalFlow: onStartOperationalFlow
+      onStartOperationalFlow: onStartOperationalFlow,
+      onLoadClientsInRoute: onLoadClientsInRoute,
     })
   }
 
@@ -66,7 +64,8 @@ export default function ItemBox({box, onStartOperationalFlow, onReseteBox}) {
 
     navigation.navigate('LateCharges', {
       box: box,
-      onStartOperationalFlow: onStartOperationalFlow
+      onStartOperationalFlow: onStartOperationalFlow,
+      onLoadClientsInRoute: onLoadClientsInRoute,
     })
   }
 

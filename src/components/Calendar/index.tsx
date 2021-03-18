@@ -4,7 +4,7 @@ import AntDesignIcon from 'react-native-vector-icons/AntDesign'
 
 import {ContainerDate, TextDate} from './styles'
 
-const Calendar: React.FC = ({date}) => {
+const Calendar: React.FC = ({date, subtitle}) => {
   const year = date.substring(0, 4);
   const month = date.substring(5, 7);
   const day = date.substring(8, 10);
@@ -13,7 +13,7 @@ const Calendar: React.FC = ({date}) => {
     <>
       <ContainerDate>
         <AntDesignIcon name="calendar" size={32} color="#000"/>
-        <TextDate>{formattedDate}</TextDate>
+        <TextDate>{formattedDate} { subtitle ? '('+ subtitle +')' : '' }</TextDate>
       </ContainerDate>
     </>
   )

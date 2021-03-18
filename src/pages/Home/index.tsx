@@ -46,8 +46,6 @@ const Home: React.FC = (props) => {
   const loadProfile = async () => {
     const data = await AsyncStorage.getItem(STORE_PROFILE);
 
-    console.log('loadProfile data', data);
-
     setProfile({
       ...JSON.parse(data)
     });
@@ -56,7 +54,6 @@ const Home: React.FC = (props) => {
   const onStartOperationalFlow = async () => {
     try {
       const data = await startOperationalFlow();
-      console.log('onStartOperationalFlow box', box);
 
       await AsyncStorage.setItem(STORE_BOX_OPERATION_FLOW, JSON.stringify(data));
 
@@ -76,8 +73,6 @@ const Home: React.FC = (props) => {
 
     loadOperationalFlow();
 
-    console.log('box', box);
-
     if (box.id) {
       onStartOperationalFlow();
     }
@@ -88,35 +83,42 @@ const Home: React.FC = (props) => {
     await AsyncStorage.setItem(STORE_BOX_OPERATION_FLOW, '{}');
   }
 
-  const charge_records = _.get(box, 'charge_records', []);
   const charges_done = _.filter(charges, {status: 'done'});
-
-  const percent = charge_records.length === 0 ? 0 : parseFloat((100 * charges_done.length) / charges.length).toFixed(2);
+  const percent = charges.length === 0 ? 0 : parseFloat((100 * charges_done.length) / charges.length).toFixed(2);
 
   return (
     <>
       <Header hello="olá," name={profile.full_name || ''}/>
 
       <Container>
-        <ContainerText>
-          <ProgressCircle
-            percent={percent}
-            radius={50}
-            borderWidth={8}
-            color="#4C9448"
-            shadowColor="#999"
-            bgColor="#fff"
-          >
-            <TextBar>{parseInt(percent) === 100 ? 'OK' : percent + '%'}</TextBar>
-          </ProgressCircle>
-          <ContainerTextColumn>
-            <DescriptionText>Total: {charges.length}</DescriptionText>
-            <DescriptionText>Visitados: {charges_done.length}</DescriptionText>
-            <DescriptionText>Restantes: {charges.length - charges_done.length}</DescriptionText>
-          </ContainerTextColumn>
-        </ContainerText>
 
-        <ItemBox box={box} onReseteBox={onReseteBox} onStartOperationalFlow={onStartOperationalFlow} />
+        {
+          !!box.id && (
+            <ContainerText>
+              <ProgressCircle
+                percent={percent}
+                radius={50}
+                borderWidth={8}
+                color="#4C9448"
+                shadowColor="#999"
+                bgColor="#fff"
+              >
+                <TextBar>{parseInt(percent) === 100 ? 'OK' : percent + '%'}</TextBar>
+              </ProgressCircle>
+              <ContainerTextColumn>
+                <DescriptionText>Total: {charges.length}</DescriptionText>
+                <DescriptionText>Visitados: {charges_done.length}</DescriptionText>
+                <DescriptionText>Restantes: {charges.length - charges_done.length}</DescriptionText>
+              </ContainerTextColumn>
+            </ContainerText>
+          )
+        }
+
+        <ItemBox
+          box={box}
+          onReseteBox={onReseteBox}
+          onLoadClientsInRoute={loadClientsInRoute}
+          onStartOperationalFlow={onStartOperationalFlow} />
 
         {
           !box.id ? <TouchableOpacity onPress={()=> {

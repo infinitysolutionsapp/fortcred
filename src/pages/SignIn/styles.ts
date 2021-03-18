@@ -5,7 +5,7 @@ export const Container = styled.View`
 `;
 
 export const ImageContainer = styled.View`
-margin: 40px 80px;
+margin: 10px 80px;
 align-items:center;
 justify-content:center;
 `;

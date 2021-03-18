@@ -14,23 +14,21 @@ import {
 import House from '../../assets/house.png'
 import getClientsInRoute from "../../services/route";
 import Spinner from 'react-native-loading-spinner-overlay';
+import _ from 'lodash';
 
 export default function CollectionRoute(props) {
   const navigation = useNavigation();
   const [charges, setCharges] = useState([]);
   const [spinner, setSpinner] = useState(true);
-  const {box, onStartOperationalFlow} = props.route.params;
-
-  console.log('navigationToCollection box', box);
+  const {box, onStartOperationalFlow, onLoadClientsInRoute} = props.route.params;
 
   function navigationToCollection(currentCharge) {
-    console.log('navigationToCollection currentCharge', currentCharge);
-
     navigation.navigate('Collection', {
       charge: currentCharge,
       box: box,
       onStartOperationalFlow: onStartOperationalFlow,
-      loadClientsInRoute: loadClientsInRoute
+      loadClientsInRoute: loadClientsInRoute,
+      onLoadClientsInRoute: onLoadClientsInRoute
     })
   }
 
@@ -83,6 +81,8 @@ export default function CollectionRoute(props) {
     </TouchableOpacity>
   );
 
+  const charges_done = _.filter(charges, {status: 'done'});
+
   return (
     <>
 
@@ -95,12 +95,12 @@ export default function CollectionRoute(props) {
       />
 
       <Header name="Rota cobrança" />
-      <Calendar date={box.created_at} />
+      <Calendar date={box.created_at} subtitle={charges_done.length + ' / ' + charges.length}/>
 
       <FlatList
         data={charges}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.id.toString()}
       />
     </>
   )

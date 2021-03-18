@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import { useNavigation } from '@react-navigation/native'
 import Header from '../../components/Header';
 import _ from 'lodash';
@@ -13,29 +13,24 @@ import {
   ViewImage
 } from './styles';
 import House from '../../assets/house.png'
-import getClientsInRoute, {getUnchargedClients} from "../../services/route";
+import {getUnchargedClients} from "../../services/route";
 import Spinner from 'react-native-loading-spinner-overlay';
 
 export default function LateCharges(props) {
   const navigation = useNavigation();
   const [charges, setCharges] = useState([]);
   const [spinner, setSpinner] = useState(true);
-  const {box, onStartOperationalFlow} = props.route.params;
+  const {box, onLoadClientsInRoute, onStartOperationalFlow} = props.route.params;
 
   const items = _.groupBy(charges, 'planned_date');
-  // console.log('items', items);
-  // console.log('items.length', Object.keys(items).length);
-  //
-  // console.log('navigationToCollection box', box);
 
   function navigationToCollection(currentCharge) {
-    console.log('navigationToCollection currentCharge', currentCharge);
-
     navigation.navigate('Collection', {
       charge: currentCharge,
       box: box,
       onStartOperationalFlow: onStartOperationalFlow,
-      loadClientsInRoute: loadClientsInRoute
+      loadClientsInRoute: loadClientsInRoute,
+      onLoadClientsInRoute: onLoadClientsInRoute
     })
   }
 
@@ -94,26 +89,23 @@ export default function LateCharges(props) {
   };
 
   const renderItemDate = ({ item, index }) => {
-
-    console.log('renderItemDate items', item);
-    console.log('renderItemDate items[item]', items[item]);
-
     return (
       <View>
-        <Calendar date={item} />
+        <Calendar date={item} subtitle={items[item].length} />
 
         <FlatList
           data={items[item]}
           renderItem={renderItem}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.id.toString()}
         />
       </View>
     )
   }
 
+  const keyExtractorHeader = useCallback((item)=> item.toString(), []);
+
   return (
     <>
-
       <Spinner
         visible={spinner}
         textContent={'Carregando...'}
@@ -126,7 +118,9 @@ export default function LateCharges(props) {
 
       <FlatList
         data={Object.keys(items)}
+        keyExtractor={keyExtractorHeader}
         refreshing={spinner}
+        maxToRenderPerBatch={6}
         onRefresh={loadClientsInRoute}
         ListEmptyComponent={<Text style={{
           fontSize: 20,

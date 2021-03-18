@@ -3,14 +3,14 @@ import {STORE_TOKEN_ACCESS} from "../utils";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const defaultOptions = {
-  baseURL: 'https://notebook.apps.roove.com.br/api/charges',
+  baseURL: 'https://demo-notebook.apps.roove.com.br/api/charges',
   timeout: 30000,
 }
 
 export function getApiAuth() {
   const instance = axios.create({
     ...defaultOptions,
-    baseURL: 'https://notebook.apps.roove.com.br/api',
+    baseURL: 'https://demo-notebook.apps.roove.com.br/api',
   });
 
   return instance;

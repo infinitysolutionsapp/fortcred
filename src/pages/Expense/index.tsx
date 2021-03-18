@@ -84,8 +84,6 @@ const Exprense: React.FC = (props) => {
     }
   }
 
-  console.log('categories', categories);
-
   return (
     <>
       <Spinner

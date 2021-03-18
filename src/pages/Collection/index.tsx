@@ -24,6 +24,8 @@ import {
 } from './styles';
 import {Line} from "../BoxClosed/styles";
 import registerCharge from "../../services/charge";
+import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
+import {getMessageErrorRequest} from "../../utils/Message";
 
 interface RegisterCharge {
   received_amount: any;
@@ -32,7 +34,14 @@ interface RegisterCharge {
 
 export default function Collection(props) {
   const navigation = useNavigation();
-  const {charge, box, onStartOperationalFlow, loadClientsInRoute} = props.route.params;
+  const {
+    charge,
+    box,
+    onStartOperationalFlow,
+    onLoadClientsInRoute,
+    loadClientsInRoute,
+    date
+  } = props.route.params;
   const {loan} = charge;
   const {client} = charge;
 
@@ -55,6 +64,8 @@ export default function Collection(props) {
     try {
       const register_charge = await registerCharge(box.id, charge.id, received_amount, action, notes)
 
+      await onLoadClientsInRoute();
+
       await onStartOperationalFlow();
 
       await loadClientsInRoute();
@@ -67,9 +78,10 @@ export default function Collection(props) {
 
     } catch (e) {
 
-      console.log('sendRegisterCharge e', e);
+      console.log('e', e);
 
-      Alert.alert('', 'Não foi possível registrar a cobrança!')
+      const message = getMessageErrorRequest(e) || 'Não foi possível registrar a cobrança!';
+      Alert.alert('Atenção', message);
     }
   };
 
@@ -96,13 +108,13 @@ export default function Collection(props) {
             style: 'cancel'
           },
           {
-            text: 'Próxima', onPress: async  () => {
-              await sendRegisterCharge({received_amount : received_amount, action : 'use_next'});
+            text: 'Próxima', onPress: async () => {
+              await sendRegisterCharge({received_amount: received_amount, action: 'use_next'});
             }
           },
           {
             text: 'Última', onPress: async () => {
-              await sendRegisterCharge({received_amount : received_amount, action : 'use_last'});
+              await sendRegisterCharge({received_amount: received_amount, action: 'use_last'});
             }
           }
         ],
@@ -118,15 +130,15 @@ export default function Collection(props) {
             style: 'cancel'
           },
           {
-            text: 'Confirmar', onPress: async  () => {
-              await sendRegisterCharge({received_amount : received_amount, action : 'do_nothing'});
+            text: 'Confirmar', onPress: async () => {
+              await sendRegisterCharge({received_amount: received_amount, action: 'do_nothing'});
             }
           },
         ],
         {cancelable: false}
       );
     } else {
-      await sendRegisterCharge({received_amount : received_amount, action : 'do_nothing'});
+      await sendRegisterCharge({received_amount: received_amount, action: 'do_nothing'});
     }
   }
 
@@ -135,10 +147,8 @@ export default function Collection(props) {
     return street + ', ' + district + ', ' + city + ' - ' + state;
   }
 
-  console.log('onRegisterCharge', amount_charge, notes);
-
   return (
-    <>
+    <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
       <Header name="Cobrança"/>
       <Container>
         <CollectionName>{client.name}</CollectionName>
@@ -250,6 +260,6 @@ export default function Collection(props) {
           )
         }
       </Container>
-    </>
+    </KeyboardAwareScrollView>
   )
 }

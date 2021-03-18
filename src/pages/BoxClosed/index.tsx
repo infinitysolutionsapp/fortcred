@@ -20,6 +20,7 @@ import {
 } from './styles';
 import Prompt from 'react-native-modal-prompt';
 import {finishOperationalFlow} from "../../services/operational-flow";
+import {getMessageErrorRequest} from "../../utils/Message";
 
 export default function BoxClosed(props) {
   const {box, onReseteBox} = props.route.params;
@@ -34,9 +35,6 @@ export default function BoxClosed(props) {
   const sum_charge = parseFloat(_.sumBy(charge_records, 'received_amount')).toFixed(2);
   const expense_records = _.get(box, 'expense_records', []);
   const sum_expense = parseFloat(_.sumBy(expense_records, 'amount')).toFixed(2);
-
-  console.log('charge_records', charge_records);
-  console.log('sum_expense', sum_expense);
 
   const renderItemExpense = ({ item }) => (
     <View>
@@ -88,7 +86,8 @@ export default function BoxClosed(props) {
       navigateToHome();
 
     } catch (e) {
-      Alert.alert('Atenção', 'Não foi possível finalizar o caixa!');
+      const message = getMessageErrorRequest(e) || 'Não foi possível finalizar o caixa!';
+      Alert.alert('Atenção', message);
     }
   }
 
@@ -125,7 +124,7 @@ export default function BoxClosed(props) {
         <FlatList
           data={charge_records}
           renderItem={renderItemCharge}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.id.toString()}
           ListEmptyComponent={<Text style={{
             fontSize: 18,
             color: '#5c5656',
@@ -149,7 +148,7 @@ export default function BoxClosed(props) {
         <FlatList
           data={expense_records}
           renderItem={renderItemExpense}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.id.toString()}
           ListEmptyComponent={<Text style={{
             fontSize: 18,
             color: '#5c5656',
