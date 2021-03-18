@@ -95,7 +95,7 @@ export default function CollectionRoute(props) {
       />
 
       <Header name="Rota cobrança" />
-      <Calendar date={new Date(box.created_at)} />
+      <Calendar date={box.created_at} />
 
       <FlatList
         data={charges}

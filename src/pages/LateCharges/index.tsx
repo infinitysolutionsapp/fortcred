@@ -100,7 +100,7 @@ export default function LateCharges(props) {
 
     return (
       <View>
-        <Calendar date={new Date(item)} />
+        <Calendar date={item} />
 
         <FlatList
           data={items[item]}

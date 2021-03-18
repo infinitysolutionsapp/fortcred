@@ -5,7 +5,10 @@ import AntDesignIcon from 'react-native-vector-icons/AntDesign'
 import {ContainerDate, TextDate} from './styles'
 
 const Calendar: React.FC = ({date}) => {
-  const formattedDate = format(new Date(date), 'dd/MM/yyyy');
+  const year = date.substring(0, 4);
+  const month = date.substring(5, 7);
+  const day = date.substring(8, 10);
+  const formattedDate = day + '/' + month +  '/' + year;
   return (
     <>
       <ContainerDate>
