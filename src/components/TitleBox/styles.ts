@@ -5,7 +5,7 @@ export const Container = styled.View`
 `;
 
 export const BoxTitle = styled.Text`
-color: #000;
+color: #4BAD73;
 font-family: 'Quicksand-Bold';
 font-size: 20px;
 line-height:25px;

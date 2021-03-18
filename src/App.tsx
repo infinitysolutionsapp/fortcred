@@ -135,15 +135,15 @@ export default function App() {
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        <StatusBar barStyle="light-content" backgroundColor="#000" translucent={false}/>
+        <StatusBar barStyle="light-content" backgroundColor="#4BAD73" translucent={false}/>
 
         <Stack.Navigator screenOptions={{
-          title: 'Cred Novo',
+          title: 'Cred Fort',
           headerTitleAlign: 'center',
           headerTintColor: "#fff",
           headerBackTitleVisible: false,
           headerStyle: {
-            backgroundColor: "#000",
+            backgroundColor: "#4BAD73",
           },
         }}>
           {state.userToken == null ? (

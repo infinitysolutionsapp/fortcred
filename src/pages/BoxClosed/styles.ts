@@ -13,7 +13,7 @@ export const Container = styled.ScrollView.attrs(() => ({
 export const UserDate = styled.Text`
 font-family: 'Lato-Light';
 font-size: 14px;
-color: #000;
+color: #4BAD73;
 align-items: center;
 padding: 0px 4px 8px;
 

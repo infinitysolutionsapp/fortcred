@@ -103,7 +103,7 @@ export default function BoxClosed(props) {
         operation={[
           {
             text: 'Cancelar',
-            color: '#000',
+            color: '#4BAD73',
             onPress: () => {
               setVisible(false);
             }},

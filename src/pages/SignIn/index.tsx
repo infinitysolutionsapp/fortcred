@@ -4,7 +4,7 @@ import {useNavigation} from '@react-navigation/native'
 import Button from '../../components/Button'
 import Input from '../../components/Input'
 import BoxTitle from '../../components/TitleBox'
-import Logo from '../../assets/logo.png'
+import Logo from '../../assets/logo.jpg'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {

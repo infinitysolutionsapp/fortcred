@@ -153,13 +153,13 @@ export default function Collection(props) {
       <Container>
         <CollectionName>{client.name}</CollectionName>
         <PhoneContainer>
-          <EntypoIcon name="old-phone" color="#000" size={20}/>
+          <EntypoIcon name="old-phone" color="#4BAD73" size={20}/>
           <RectButton onPress={sendPhone}>
             <PhoneText>{client.phone || 'Sem número'}</PhoneText>
           </RectButton>
         </PhoneContainer>
         <LocationContainer>
-          <FontAwesomeIcon name="map-marker" color="#000" size={20}/>
+          <FontAwesomeIcon name="map-marker" color="#4BAD73" size={20}/>
           <RectButton onPress={handleOpenGoogleMapRoutes}>
             <Location>{getFormattedAddress()}</Location>
           </RectButton>
