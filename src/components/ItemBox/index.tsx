@@ -7,6 +7,7 @@ import Cadeado from '../../assets/cadeado.png';
 import Despesa from '../../assets/despesa.png';
 import ProfileImg from '../../assets/profile.png';
 import CalendarImg from '../../assets/calendar.png';
+import CalculatorImg from '../../assets/calculator.png';
 
 import {Title, Item, Container} from './styles'
 
@@ -53,7 +54,11 @@ export default function ItemBox({box, onStartOperationalFlow, onReseteBox, onLoa
   }
 
   function goToProfile() {
-    navigation.navigate('Profile')
+    navigation.navigate('Profile');
+  }
+
+  function goToCalculate() {
+    navigation.navigate('Calculate');
   }
 
   function goToLateCharges() {
@@ -97,6 +102,10 @@ export default function ItemBox({box, onStartOperationalFlow, onReseteBox, onLoa
         </Item>
       </Container>
       <Container>
+        <Item onPress={goToCalculate} style={{shadowColor: '#000', elevation: 8,}}>
+          <Image source={CalculatorImg} width={42} height={42}/>
+          <Title>Recalcular</Title>
+        </Item>
         <Item onPress={goToProfile} style={{shadowColor: '#000', elevation: 8,}}>
           <Image source={ProfileImg} width={42} height={42}/>
           <Title>Perfil</Title>

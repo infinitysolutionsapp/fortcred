@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import "intl";
 import "intl/locale-data/jsonp/pt-BR";
-import SplashScreen from 'react-native-splash-screen'
+// import SplashScreen from 'react-native-splash-screen'
 
 import React from 'react';
 import {StatusBar, Alert} from 'react-native';
@@ -16,6 +16,7 @@ import Collection from "./pages/Collection";
 import Expense from "./pages/Expense";
 import BoxClosed from "./pages/BoxClosed";
 import LateCharges from "./pages/LateCharges";
+import Calculate from "./pages/Calculate";
 import Profile from "./pages/Profile";
 import login from "./services/login";
 import {STORE_TOKEN_ACCESS, STORE_DATA_TOKEN, STORE_PROFILE} from "./utils";
@@ -87,7 +88,7 @@ export default function App() {
 
     bootstrapAsync();
 
-    SplashScreen.hide();
+    // SplashScreen.hide();
   }, []);
 
   const authContext = React.useMemo(
@@ -162,6 +163,7 @@ export default function App() {
               <Stack.Screen name="Collection" component={Collection}/>
               <Stack.Screen name="BoxClosed" component={BoxClosed}/>
               <Stack.Screen name="LateCharges" component={LateCharges}/>
+              <Stack.Screen name="Calculate" component={Calculate}/>
               <Stack.Screen name="Profile">
                 {props => (<Profile {...props} extraData={{
                   authContext: AuthContext
