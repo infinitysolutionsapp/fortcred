@@ -15,6 +15,7 @@ import House from '../../assets/house.png'
 import getClientsInRoute from "../../services/route";
 import Spinner from 'react-native-loading-spinner-overlay';
 import _ from 'lodash';
+import moment from "moment";
 
 export default function CollectionRoute(props) {
   const navigation = useNavigation();
@@ -95,7 +96,7 @@ export default function CollectionRoute(props) {
       />
 
       <Header name="Rota cobrança" />
-      <Calendar date={box.created_at} subtitle={charges_done.length + ' / ' + charges.length}/>
+      <Calendar date={moment()} subtitle={charges_done.length + ' / ' + charges.length}/>
 
       <FlatList
         data={charges}
