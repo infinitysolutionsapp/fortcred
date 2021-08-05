@@ -1,18 +1,35 @@
-import React from 'react';
+import React,{useState} from 'react';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
-import { Container, TitleLigth, TitleBold } from './styles'
+import { Container, TitleLigth, TitleBold,SearchInput } from './styles'
 
-interface TitleBoldProps  {
-name: string;
-hello?:string;
+interface TitleBoldProps {
+  name: string;
+  hello?: string;
+  icon?: string;
+  onChangeText?: string;
+  value?: string;
 }
 
-const Header: React.FC<TitleBoldProps> = ({name,hello }) => {
+const Header: React.FC<TitleBoldProps> = ({ name, hello, icon,onChangeText,value }) => {
+  const [visible,setVisible] = useState(false);
+
   return (
     <>
       <Container>
-        <TitleLigth>{hello ? hello : '' }</TitleLigth>
-        <TitleBold>{name}</TitleBold>
+        {icon && <FontAwesome style={{ marginLeft: 20 }} onPress={() => setVisible(!visible)} name={icon} size={20} color='#fff' />}
+
+        {visible ? 
+        <SearchInput 
+        onChangeText={onChangeText}
+        value={value}
+        /> : (
+          <>
+            <TitleLigth>{hello ? hello : ''}</TitleLigth>
+            <TitleBold>{name}</TitleBold>
+          </>
+        )}
+
       </Container>
     </>
   );

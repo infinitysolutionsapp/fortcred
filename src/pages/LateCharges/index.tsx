@@ -1,8 +1,8 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native'
 import Header from '../../components/Header';
 import _ from 'lodash';
-import {View, TouchableOpacity, FlatList, Text} from 'react-native';
+import { View, TouchableOpacity, FlatList, Text } from 'react-native';
 import Calendar from '../../components/Calendar'
 import {
   UserImage,
@@ -13,17 +13,20 @@ import {
   ViewImage
 } from './styles';
 import House from '../../assets/house.png'
-import {getUnchargedClients} from "../../services/route";
+import { getUnchargedClients } from "../../services/route";
 import Spinner from 'react-native-loading-spinner-overlay';
 
 export default function LateCharges(props) {
   const navigation = useNavigation();
   const [charges, setCharges] = useState([]);
+  const [allCharges, setAllCharges] = useState([]);
   const [spinner, setSpinner] = useState(true);
-  const {box, onLoadClientsInRoute, onStartOperationalFlow} = props.route.params;
+  const [filterValue, setFilterValue] = useState("");
+
+  const { box, onLoadClientsInRoute, onStartOperationalFlow } = props.route.params;
 
   const items = _.groupBy(charges, 'planned_date');
-
+  console.log('@charges', charges[0]);
   function navigationToCollection(currentCharge) {
     navigation.navigate('Collection', {
       charge: currentCharge,
@@ -42,9 +45,24 @@ export default function LateCharges(props) {
     setSpinner(false);
   }
 
-  useEffect(()=> {
+  useEffect(() => {
     loadClientsInRoute();
   }, []);
+
+  const onFilterChange = async (text: string) => {
+    console.log('TEXT', text)
+    if (!text) {
+      setCharges([...allCharges]);
+      setFilterValue(text);
+      return;
+    }
+
+    const itemsFiltered = allCharges.filter((charge) => {
+      return charge.client.name.includes(text);
+    });
+    setCharges([...itemsFiltered])
+    setFilterValue(text);
+  };
 
   const renderItem = ({ item, index }) => {
 
@@ -61,7 +79,7 @@ export default function LateCharges(props) {
             flexDirection: 'row',
           }}>
             <ViewImage>
-              <UserImage source={House}/>
+              <UserImage source={House} />
             </ViewImage>
             <View style={{
               flexDirection: 'column'
@@ -78,9 +96,9 @@ export default function LateCharges(props) {
           </View>
           <View>
             {item.status !== 'pending' ? (
-              <EyeIcon name="check-circle" color="#11B586" size={22}/>
+              <EyeIcon name="check-circle" color="#11B586" size={22} />
             ) : (
-              <EyeIcon name="check-circle" color="#8F8888" size={22}/>
+              <EyeIcon name="check-circle" color="#8F8888" size={22} />
             )}
           </View>
         </HeaderList>
@@ -102,7 +120,7 @@ export default function LateCharges(props) {
     )
   }
 
-  const keyExtractorHeader = useCallback((item)=> item.toString(), []);
+  const keyExtractorHeader = useCallback((item) => item.toString(), []);
 
   return (
     <>
@@ -114,7 +132,7 @@ export default function LateCharges(props) {
         }}
       />
 
-      <Header name="Cobranças Atrasadas" />
+      <Header name="Cobranças Atrasadas" icon="search" onChangeText={onFilterChange} value={filterValue} />
 
       <FlatList
         data={Object.keys(items)}
