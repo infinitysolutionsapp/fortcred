@@ -26,7 +26,7 @@ export default function LateCharges(props) {
   const { box, onLoadClientsInRoute, onStartOperationalFlow } = props.route.params;
 
   const items = _.groupBy(charges, 'planned_date');
-  console.log('@charges', charges[0]);
+
   function navigationToCollection(currentCharge) {
     navigation.navigate('Collection', {
       charge: currentCharge,
@@ -42,6 +42,7 @@ export default function LateCharges(props) {
     const uncharged_clients = await getUnchargedClients();
 
     setCharges([...uncharged_clients]);
+    setAllCharges([...uncharged_clients]);
     setSpinner(false);
   }
 
@@ -58,7 +59,7 @@ export default function LateCharges(props) {
     }
 
     const itemsFiltered = allCharges.filter((charge) => {
-      return charge.client.name.includes(text);
+      return charge.client.name.toLowerCase().includes(text.toLowerCase());
     });
     setCharges([...itemsFiltered])
     setFilterValue(text);
@@ -137,9 +138,10 @@ export default function LateCharges(props) {
       <FlatList
         data={Object.keys(items)}
         keyExtractor={keyExtractorHeader}
-        refreshing={spinner}
+        initialNumToRender={6}
         maxToRenderPerBatch={6}
-        onRefresh={loadClientsInRoute}
+        // refreshing={spinner}
+        // onRefresh={loadClientsInRoute}
         ListEmptyComponent={<Text style={{
           fontSize: 20,
           color: '#5c5656',
