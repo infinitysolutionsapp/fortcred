@@ -19,7 +19,7 @@ import LateCharges from "./pages/LateCharges";
 import Calculate from "./pages/Calculate";
 import Profile from "./pages/Profile";
 import login from "./services/login";
-import {STORE_TOKEN_ACCESS, STORE_DATA_TOKEN, STORE_PROFILE} from "./utils";
+import { STORE_TOKEN_ACCESS, STORE_DATA_TOKEN, STORE_PROFILE, STORE_TOKEN_REFRESH } from "./utils";
 import getProfile from "./services/profile";
 
 function SignInScreen() {
@@ -44,10 +44,6 @@ export default function App() {
             isLoading: false,
           };
         case 'SIGN_IN':
-
-          console.log('state', state);
-          console.log('prevState', prevState);
-
           return {
             ...prevState,
             isSignout: false,
@@ -94,13 +90,11 @@ export default function App() {
   const authContext = React.useMemo(
     () => ({
       signIn: async data => {
-
-        console.log('data', data);
-
         try {
           const { username, password } = data;
           const token = await login(username, password);
 
+          await AsyncStorage.setItem(STORE_TOKEN_REFRESH, token.refresh);
           await AsyncStorage.setItem(STORE_TOKEN_ACCESS, token.access);
           await AsyncStorage.setItem(STORE_DATA_TOKEN, JSON.stringify(token));
 

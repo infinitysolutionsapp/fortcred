@@ -6,8 +6,6 @@ export default async function startOperationalFlow() {
       const api = await getApi();
       const response = await api.get(`/obtain-operational-flow/`);
 
-      console.log('response.data', response.data);
-
       resolve(response.data);
     } catch (error) {
       reject(error.response);

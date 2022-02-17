@@ -70,8 +70,6 @@ export default function Collection(props) {
 
       await loadClientsInRoute();
 
-      console.log('register_charge', register_charge);
-
       Alert.alert('', 'Cobrança registrada com sucesso!');
 
       navigation.goBack();
@@ -90,8 +88,6 @@ export default function Collection(props) {
       .replace('R$ ', '')
       .replace('.', '')
       .replace(',', '.'));
-
-    console.log('received_amount && !notes', received_amount, notes);
 
     if (!received_amount && !notes) {
       Alert.alert('', 'Para registrar uma cobrança com valor zero! Você precisa informar um motivo!')

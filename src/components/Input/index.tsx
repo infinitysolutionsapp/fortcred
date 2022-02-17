@@ -26,9 +26,6 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = ({ mask, input
 
   function handleChange(text:string) {
     if (mask === "currency") {
-
-      console.log('handleChange text', text);
-
       const value = maskCurrency(text);
       inputMaskChange(value);
     }

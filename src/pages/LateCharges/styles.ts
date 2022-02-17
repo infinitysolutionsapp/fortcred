@@ -41,8 +41,17 @@ export const ValueName = styled.Text`
   line-height: 17px;
   color: #6B6B6B;
   align-items: center;
-
 `;
+
+export const DebtorAmount = styled.Text`
+  font-family: 'Lato-Light';
+  font-size: 14px;
+  line-height: 17px;
+  color: #000;
+  align-items: center;
+  font-weight: bold;
+`;
+
 export const UserImage = styled.Image`
 `;
 

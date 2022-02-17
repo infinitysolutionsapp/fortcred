@@ -62,8 +62,6 @@ const Exprense: React.FC = (props) => {
         .replace('.', '')
         .replace(',', '.'));
 
-      console.log('received_amount && !notes', expense_amount, notes);
-
       if (!expense_amount && !notes) {
         Alert.alert('', 'Informe o valor e a descrição da despesa')
         return;

@@ -2,8 +2,6 @@ import getApi from './api';
 
 export default async function getProfile() {
 
-  console.log('getProfile getProfile');
-
   const promise = new Promise(async (resolve, reject) => {
     try {
       const api = await getApi();
