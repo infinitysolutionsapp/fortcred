@@ -9,7 +9,7 @@ export const Container = styled.View`
 `;
 
 export const Header = styled.View`
-  padding: 12px;
+  padding: 12px 24px 12px 12px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -27,26 +27,55 @@ export const UserName = styled.Text`
   font-weight: bold;
 `;
 
+export const HeaderIconContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const UserContainer = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.7,
+})`
+  height: 40px;
+  width: 40px;
+  background-color: #333;
+  border-radius: 20px;
+
+  align-items: center;
+  justify-content: center;
+`;
+
+export const UserIcon = styled(Ionicons).attrs({
+  size: 24,
+  color: '#AAA',
+  name: 'person-outline',
+})``;
+
 export const NotificationIcon = styled(Ionicons).attrs({
   name: 'notifications',
   size: 24,
   color: '#FFF',
-})``;
+})`
+  right: 12px;
+`;
 
-export const NotificationContainer = styled.View`
-  border-radius: 10px;
-  background-color: #f00;
-  position: absolute;
-  right: 0px;
-  top: 16px;
+export const NotificationContainer = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.7,
+})`
+  background-color: #c53030;
+  border-radius: 12px;
+  height: 24px;
+  width: 24px;
 
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  bottom: 8px;
+  right: 20px;
 `;
 
 export const NotificationNumber = styled.Text`
   color: #fff;
-  font-size: 12px;
+  font-size: 10px;
 `;
 
 export const SaldoBox = styled.View`

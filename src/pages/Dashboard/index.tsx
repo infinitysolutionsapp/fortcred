@@ -13,6 +13,7 @@ import {
   EyeBox,
   EyeIcon,
   Header,
+  HeaderIconContainer,
   IconMenu,
   MenuContainer,
   ModalContainer,
@@ -27,6 +28,8 @@ import {
   SeeExtractButtonIcon,
   SeeExtractButtonText,
   Time,
+  UserContainer,
+  UserIcon,
   UserName,
 } from './styles';
 import {useNavigation} from '@react-navigation/native';
@@ -34,8 +37,8 @@ import {useNavigation} from '@react-navigation/native';
 const Dashboard: React.FC = () => {
   const navigation = useNavigation();
 
-  const [check, setCheck] = useState(true);
-
+  const [check, setCheck] = useState(false);
+  const [gretting, setGretting] = useState('');
   const [profile, setProfile] = useState({});
   const [box, setBox] = useState({
     id: false,
@@ -48,6 +51,18 @@ const Dashboard: React.FC = () => {
       ...JSON.parse(data || '{}'),
     });
   };
+
+  const getHoursTime = useCallback(() => {
+    const currentHour = new Date().getHours();
+
+    if (currentHour < 12) {
+      setGretting('Bom dia');
+    } else if (currentHour >= 12 && currentHour < 18) {
+      setGretting('Boa tarde');
+    } else {
+      setGretting('Boa noite');
+    }
+  }, []);
 
   const loadClientsInRoute = async () => {
     const data = await getClientsInRoute();
@@ -82,6 +97,7 @@ const Dashboard: React.FC = () => {
   };
 
   useEffect(() => {
+    getHoursTime();
     loadClientsInRoute();
 
     loadProfile();
@@ -99,8 +115,12 @@ const Dashboard: React.FC = () => {
   };
 
   const CheckVisible = useCallback(() => {
+    if (!box.id) {
+      Alert.alert('', 'Você precisa iniciar o caixa');
+      return;
+    }
     setCheck(!check);
-  }, [check]);
+  }, [check, box]);
 
   const handleBox = useCallback(() => {
     if (box.id) {
@@ -114,19 +134,24 @@ const Dashboard: React.FC = () => {
     }
   }, []);
 
-  console.log('box', box);
+  // console.log('box', box);
 
   return (
     <Container>
       <Header>
         <Time>
-          Boa tarde,{'\n'}
-          <UserName>Gleilson</UserName>
+          {gretting || 'Carregando...'},{'\n'}
+          <UserName>{profile.full_name}</UserName>
         </Time>
-        <NotificationIcon />
-        <NotificationContainer>
-          <NotificationNumber>99+</NotificationNumber>
-        </NotificationContainer>
+        <HeaderIconContainer>
+          <NotificationIcon />
+          <NotificationContainer>
+            <NotificationNumber>99+</NotificationNumber>
+          </NotificationContainer>
+          <UserContainer>
+            <UserIcon />
+          </UserContainer>
+        </HeaderIconContainer>
       </Header>
       <SaldoBox>
         <SaldoText>Saldo</SaldoText>

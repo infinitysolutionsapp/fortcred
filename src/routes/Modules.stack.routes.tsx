@@ -12,7 +12,7 @@ const {Navigator, Screen} = createStackNavigator();
 
 const ModulesStackRoutes = () => {
   return (
-    <Navigator>
+    <Navigator screenOptions={{headerShown: false}}>
       <Screen name="Dashboard" component={Dashboard} />
       <Screen name="Expense" component={Expense} />
       <Screen name="Collection" component={Collection} />
