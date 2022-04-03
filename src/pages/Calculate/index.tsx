@@ -1,38 +1,34 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Alert, Text, TextInput, View} from 'react-native'
-import {Picker} from '@react-native-picker/picker';
-import {useNavigation} from '@react-navigation/native'
-import Button from '../../components/Button'
-import Input from '../../components/Input'
-import BoxTitle from '../../components/TitleBox'
+import React, {useState} from 'react';
+import {Text, View} from 'react-native';
+import Button from '../../components/Button';
+import Input from '../../components/Input';
+import BoxTitle from '../../components/TitleBox';
 import Header from '../../components/Header';
-import {
-  Container,
-  BoxContainer,
-  Box,
-} from './styles';
+import {Box, BoxContainer, Container} from './styles';
 
-const Calculate: React.FC = (props) => {
-  const [amount, setAmount] = useState(null)
-  const [total, setTotal] = useState(0)
+const Calculate: React.FC = props => {
+  const [amount, setAmount] = useState(null);
+  const [total, setTotal] = useState(0);
   const [installment, setInstallment] = useState(0);
   const [percent, setPercent] = useState(0);
   const [day, setDays] = useState(0);
 
   const onCalculate = async () => {
-    const amount_value = parseFloat((amount || '0')
-      .replace('R$ ', '')
-      .replace('.', '')
-      .replace(',', '.'));
+    const amount_value = parseFloat(
+      (amount || '0').replace('R$ ', '').replace('.', '').replace(',', '.'),
+    );
 
     if (amount_value && day && percent) {
-      const total_percent = percent === 0 ? amount_value : amount_value * (percent + 100.0) / 100.0;
+      const total_percent =
+        percent === 0
+          ? amount_value
+          : (amount_value * (percent + 100.0)) / 100.0;
       const installment_value = total_percent / day;
 
       setTotal(total_percent);
       setInstallment(installment_value);
     }
-  }
+  };
 
   return (
     <>
@@ -51,7 +47,7 @@ const Calculate: React.FC = (props) => {
               label="VALOR DEVEDOR"
               returnKeyType="next"
             />
-            <View style={{marginTop: 10}}/>
+            <View style={{marginTop: 10}} />
 
             <Input
               label="PERCENTUAL"
@@ -60,7 +56,7 @@ const Calculate: React.FC = (props) => {
               returnKeyType="next"
               onChangeText={(text: number) => setPercent(parseInt(text))}
             />
-            <View style={{marginTop: 10}}/>
+            <View style={{marginTop: 10}} />
 
             <Input
               label="QUANTIDADE DE DIAS"
@@ -69,47 +65,53 @@ const Calculate: React.FC = (props) => {
               onChangeText={(text: number) => setDays(parseInt(text))}
             />
 
-            <View style={{
-              marginTop: 10,
-              display: 'flex',
-              flexDirection: 'row',
-            }}>
-              <Text style={{
-                fontSize: 16,
-                marginRight: 10,
-              }}>PARCELA:&nbsp;
+            <View
+              style={{
+                marginTop: 10,
+                display: 'flex',
+                flexDirection: 'row',
+              }}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  marginRight: 10,
+                }}>
+                PARCELA:&nbsp;
               </Text>
-              <Text style={{
-                fontSize: 16,
-                color: '#061dd7'
-              }}>{
-                Intl.NumberFormat('pt-BR', {
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: '#061dd7',
+                }}>
+                {Intl.NumberFormat('pt-BR', {
                   style: 'currency',
-                  currency: 'BRL'
-                }).format(installment)
-              }
+                  currency: 'BRL',
+                }).format(installment)}
               </Text>
             </View>
 
-            <View style={{
-              marginTop: 10,
-              display: 'flex',
-              flexDirection: 'row',
-            }}>
-              <Text style={{
-                fontSize: 16,
-                marginRight: 10,
-              }}>VALOR TOTAL:&nbsp;
+            <View
+              style={{
+                marginTop: 10,
+                display: 'flex',
+                flexDirection: 'row',
+              }}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  marginRight: 10,
+                }}>
+                VALOR TOTAL:&nbsp;
               </Text>
-              <Text style={{
-                fontSize: 16,
-                color: '#061dd7'
-              }}>{
-                Intl.NumberFormat('pt-BR', {
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: '#061dd7',
+                }}>
+                {Intl.NumberFormat('pt-BR', {
                   style: 'currency',
-                  currency: 'BRL'
-                }).format(total)
-              }
+                  currency: 'BRL',
+                }).format(total)}
               </Text>
             </View>
 

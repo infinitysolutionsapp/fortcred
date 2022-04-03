@@ -2,11 +2,10 @@ import 'react-native-gesture-handler';
 import 'intl';
 import 'intl/locale-data/jsonp/pt-BR';
 // import SplashScreen from 'react-native-splash-screen'
-
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import {StatusBar, Alert, Platform} from 'react-native';
+import {Alert, Platform, StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Profile from './pages/Profile';
@@ -20,9 +19,9 @@ import SignIn from './pages/SignIn';
 
 import login from './services/login';
 import {
-  STORE_TOKEN_ACCESS,
   STORE_DATA_TOKEN,
   STORE_PROFILE,
+  STORE_TOKEN_ACCESS,
   STORE_TOKEN_REFRESH,
 } from './utils';
 import getProfile from './services/profile';

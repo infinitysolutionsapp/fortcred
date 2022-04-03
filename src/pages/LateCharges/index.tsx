@@ -2,16 +2,16 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/Header';
 import _ from 'lodash';
-import {View, TouchableOpacity, FlatList, Text} from 'react-native';
+import {FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {
+  DebtorAmount,
+  EyeIcon,
+  HeaderList,
+  HeaderTitle,
   UserImage,
   ValueName,
-  HeaderTitle,
-  HeaderList,
-  EyeIcon,
   ViewImage,
-  DebtorAmount
-} from "./styles";
+} from './styles';
 import House from '../../assets/house.png';
 import {getUnchargedClients} from '../../services/route';
 import Spinner from 'react-native-loading-spinner-overlay';

@@ -1,4 +1,4 @@
-import React, {useEffect, useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import ItemBox from '../../components/ItemBox';
 
@@ -6,29 +6,28 @@ import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {STORE_BOX_OPERATION_FLOW, STORE_PROFILE} from '../../utils';
 import startOperationalFlow from '../../services/operational-flow';
-import _ from 'lodash';
 import getClientsInRoute from '../../services/route';
 
 import {
   Container,
-  Time,
-  UserName,
+  EyeBox,
+  EyeIcon,
   Header,
+  IconMenu,
+  MenuContainer,
+  ModalContainer,
+  MoneyBox,
+  NotificationContainer,
   NotificationIcon,
   NotificationNumber,
   SaldoBox,
   SaldoBoxContent,
   SaldoText,
-  MoneyBox,
-  EyeBox,
-  EyeIcon,
   SeeExtractButton,
-  SeeExtractButtonText,
   SeeExtractButtonIcon,
-  NotificationContainer,
-  ModalContainer,
-  MenuContainer,
-  IconMenu,
+  SeeExtractButtonText,
+  Time,
+  UserName,
 } from './styles';
 import {useNavigation} from '@react-navigation/native';
 

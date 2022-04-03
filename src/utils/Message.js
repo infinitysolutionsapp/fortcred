@@ -1,7 +1,6 @@
-
 import _ from 'lodash';
 
-export const getMessageErrorRequest = (error) => {
+export const getMessageErrorRequest = error => {
   const errors = _.get(error, 'data', {});
   const keys = Object.keys(errors);
   let messages = null;
@@ -11,4 +10,4 @@ export const getMessageErrorRequest = (error) => {
   }
 
   return messages;
-}
+};

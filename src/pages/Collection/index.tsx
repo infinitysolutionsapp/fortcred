@@ -1,31 +1,31 @@
 import React, {useRef, useState} from 'react';
-import {useNavigation} from '@react-navigation/native'
+import {useNavigation} from '@react-navigation/native';
 import {Alert, Linking, TextInput, View} from 'react-native';
-import EntypoIcon from 'react-native-vector-icons/Entypo'
-import BoxTitle from '../../components/TitleBox'
-import Input from '../../components/Input'
-import Button from '../../components/Button'
-import {RectButton} from 'react-native-gesture-handler'
+import EntypoIcon from 'react-native-vector-icons/Entypo';
+import BoxTitle from '../../components/TitleBox';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
+import {RectButton} from 'react-native-gesture-handler';
 
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome'
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import Header from '../../components/Header';
 import {
-  Container,
-  CollectionName,
-  PhoneContainer,
-  PhoneText,
-  Location,
-  LocationContainer,
-  ValueContainer,
-  ValueText,
-  ValueNumber,
   Box,
   BoxContainer,
+  CollectionName,
+  Container,
+  Location,
+  LocationContainer,
+  PhoneContainer,
+  PhoneText,
+  ValueContainer,
+  ValueNumber,
+  ValueText,
 } from './styles';
-import {Line} from "../BoxClosed/styles";
-import registerCharge from "../../services/charge";
-import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
-import {getMessageErrorRequest} from "../../utils/Message";
+import {Line} from '../BoxClosed/styles';
+import registerCharge from '../../services/charge';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {getMessageErrorRequest} from '../../utils/Message';
 
 interface RegisterCharge {
   received_amount: any;
@@ -40,18 +40,18 @@ export default function Collection(props) {
     onStartOperationalFlow,
     onLoadClientsInRoute,
     loadClientsInRoute,
-    date
+    date,
   } = props.route.params;
   const {loan} = charge;
   const {client} = charge;
 
   const [notes, setNotes] = useState('');
   const passwordInputRef = useRef<TextInput>(null);
-  const [amount_charge, setAmountCharge] = useState('')
+  const [amount_charge, setAmountCharge] = useState('');
 
   function handleOpenGoogleMapRoutes() {
     const address = getFormattedAddress();
-    Linking.openURL(`https://www.google.com/maps/place/` + address)
+    Linking.openURL('https://www.google.com/maps/place/' + address);
   }
 
   function sendPhone() {
@@ -60,9 +60,18 @@ export default function Collection(props) {
     }
   }
 
-  const sendRegisterCharge = async ({received_amount, action}: RegisterCharge) => {
+  const sendRegisterCharge = async ({
+    received_amount,
+    action,
+  }: RegisterCharge) => {
     try {
-      const register_charge = await registerCharge(box.id, charge.id, received_amount, action, notes)
+      const register_charge = await registerCharge(
+        box.id,
+        charge.id,
+        received_amount,
+        action,
+        notes,
+      );
 
       await onLoadClientsInRoute();
 
@@ -73,24 +82,28 @@ export default function Collection(props) {
       Alert.alert('', 'Cobrança registrada com sucesso!');
 
       navigation.goBack();
-
     } catch (e) {
-
       console.log('e', e);
 
-      const message = getMessageErrorRequest(e) || 'Não foi possível registrar a cobrança!';
+      const message =
+        getMessageErrorRequest(e) || 'Não foi possível registrar a cobrança!';
       Alert.alert('Atenção', message);
     }
   };
 
   async function onRegisterCharge() {
-    const received_amount = parseFloat((amount_charge || '0')
-      .replace('R$ ', '')
-      .replace('.', '')
-      .replace(',', '.'));
+    const received_amount = parseFloat(
+      (amount_charge || '0')
+        .replace('R$ ', '')
+        .replace('.', '')
+        .replace(',', '.'),
+    );
 
     if (!received_amount && !notes) {
-      Alert.alert('', 'Para registrar uma cobrança com valor zero! Você precisa informar um motivo!')
+      Alert.alert(
+        '',
+        'Para registrar uma cobrança com valor zero! Você precisa informar um motivo!',
+      );
       return;
     }
 
@@ -101,20 +114,28 @@ export default function Collection(props) {
         [
           {
             text: 'Cancelar',
-            style: 'cancel'
+            style: 'cancel',
           },
           {
-            text: 'Próxima', onPress: async () => {
-              await sendRegisterCharge({received_amount: received_amount, action: 'use_next'});
-            }
+            text: 'Próxima',
+            onPress: async () => {
+              await sendRegisterCharge({
+                received_amount: received_amount,
+                action: 'use_next',
+              });
+            },
           },
           {
-            text: 'Última', onPress: async () => {
-              await sendRegisterCharge({received_amount: received_amount, action: 'use_last'});
-            }
-          }
+            text: 'Última',
+            onPress: async () => {
+              await sendRegisterCharge({
+                received_amount: received_amount,
+                action: 'use_last',
+              });
+            },
+          },
         ],
-        {cancelable: false}
+        {cancelable: false},
       );
     } else if (received_amount < charge.amount) {
       Alert.alert(
@@ -123,49 +144,57 @@ export default function Collection(props) {
         [
           {
             text: 'Cancelar',
-            style: 'cancel'
+            style: 'cancel',
           },
           {
-            text: 'Confirmar', onPress: async () => {
-              await sendRegisterCharge({received_amount: received_amount, action: 'do_nothing'});
-            }
+            text: 'Confirmar',
+            onPress: async () => {
+              await sendRegisterCharge({
+                received_amount: received_amount,
+                action: 'do_nothing',
+              });
+            },
           },
         ],
-        {cancelable: false}
+        {cancelable: false},
       );
     } else {
-      await sendRegisterCharge({received_amount: received_amount, action: 'do_nothing'});
+      await sendRegisterCharge({
+        received_amount: received_amount,
+        action: 'do_nothing',
+      });
     }
   }
 
   const getFormattedAddress = () => {
     const {street, district, city, state} = client;
     return street + ', ' + district + ', ' + city + ' - ' + state;
-  }
+  };
 
   return (
     <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
-      <Header name="Cobrança"/>
+      <Header name="Cobrança" />
       <Container>
         <CollectionName>{client.name}</CollectionName>
         <PhoneContainer>
-          <EntypoIcon name="old-phone" color="#4BAD73" size={20}/>
+          <EntypoIcon name="old-phone" color="#4BAD73" size={20} />
           <RectButton onPress={sendPhone}>
             <PhoneText>{client.phone || 'Sem número'}</PhoneText>
           </RectButton>
         </PhoneContainer>
         <LocationContainer>
-          <FontAwesomeIcon name="map-marker" color="#4BAD73" size={20}/>
+          <FontAwesomeIcon name="map-marker" color="#4BAD73" size={20} />
           <RectButton onPress={handleOpenGoogleMapRoutes}>
             <Location>{getFormattedAddress()}</Location>
           </RectButton>
         </LocationContainer>
 
-        <View style={{
-          paddingTop: 20,
-          paddingBottom: 10
-        }}>
-          <Line/>
+        <View
+          style={{
+            paddingTop: 20,
+            paddingBottom: 10,
+          }}>
+          <Line />
         </View>
 
         <ValueContainer>
@@ -173,7 +202,7 @@ export default function Collection(props) {
           <ValueNumber>
             {Intl.NumberFormat('pt-BR', {
               style: 'currency',
-              currency: 'BRL'
+              currency: 'BRL',
             }).format(loan.final_amount)}
           </ValueNumber>
         </ValueContainer>
@@ -183,14 +212,16 @@ export default function Collection(props) {
           <ValueNumber>
             {Intl.NumberFormat('pt-BR', {
               style: 'currency',
-              currency: 'BRL'
+              currency: 'BRL',
             }).format(loan.amount)}
           </ValueNumber>
         </ValueContainer>
 
         <ValueContainer>
           <ValueText>Parcelas:</ValueText>
-          <ValueNumber>{charge.sequence} / {loan.installments_count}</ValueNumber>
+          <ValueNumber>
+            {charge.sequence} / {loan.installments_count}
+          </ValueNumber>
         </ValueContainer>
 
         <ValueContainer>
@@ -198,64 +229,60 @@ export default function Collection(props) {
           <ValueNumber>
             {Intl.NumberFormat('pt-BR', {
               style: 'currency',
-              currency: 'BRL'
+              currency: 'BRL',
             }).format(charge.amount)}
           </ValueNumber>
         </ValueContainer>
 
-        {
-          !!charge.received_amount && (
-            <ValueContainer>
-              <ValueText>Valor Pago:</ValueText>
-              <ValueNumber>
-                {Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL'
-                }).format(charge.received_amount)}
-              </ValueNumber>
-            </ValueContainer>
-          )
-        }
+        {!!charge.received_amount && (
+          <ValueContainer>
+            <ValueText>Valor Pago:</ValueText>
+            <ValueNumber>
+              {Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+              }).format(charge.received_amount)}
+            </ValueNumber>
+          </ValueContainer>
+        )}
 
         <ValueContainer>
           <ValueText>Restante:</ValueText>
           <ValueNumber>
             {Intl.NumberFormat('pt-BR', {
               style: 'currency',
-              currency: 'BRL'
+              currency: 'BRL',
             }).format(loan.final_amount - loan.paid_amount)}
           </ValueNumber>
         </ValueContainer>
 
-        {
-          charge.status === 'pending' && (
-            <BoxContainer>
-              <Box>
-                <BoxTitle title="REGISTRAR COBRANÇA"/>
-                <Input
-                  mask="currency"
-                  value={amount_charge}
-                  inputMaskChange={setAmountCharge}
-                  keyboardType="numeric"
-                  label="Valor"
-                  returnKeyType="next"
-                  onSubmitEditing={() => passwordInputRef.current?.focus()}
-                />
-                <View style={{marginTop: 10}}/>
+        {charge.status === 'pending' && (
+          <BoxContainer>
+            <Box>
+              <BoxTitle title="REGISTRAR COBRANÇA" />
+              <Input
+                mask="currency"
+                value={amount_charge}
+                inputMaskChange={setAmountCharge}
+                keyboardType="numeric"
+                label="Valor"
+                returnKeyType="next"
+                onSubmitEditing={() => passwordInputRef.current?.focus()}
+              />
+              <View style={{marginTop: 10}} />
 
-                <Input
-                  keyboardType="default"
-                  label="Observação"
-                  value={notes}
-                  onChangeText={(text: string) => setNotes(text)}
-                />
+              <Input
+                keyboardType="default"
+                label="Observação"
+                value={notes}
+                onChangeText={(text: string) => setNotes(text)}
+              />
 
-                <Button onPress={onRegisterCharge}>REGISTRAR</Button>
-              </Box>
-            </BoxContainer>
-          )
-        }
+              <Button onPress={onRegisterCharge}>REGISTRAR</Button>
+            </Box>
+          </BoxContainer>
+        )}
       </Container>
     </KeyboardAwareScrollView>
-  )
+  );
 }

@@ -1,17 +1,16 @@
 import React from 'react';
+import {BoxTitle, Container} from './styles';
 
 interface BoxProps {
   title: string;
 }
 
- import { Container,BoxTitle,  } from './styles';
-
 const TitleBox: React.FC<BoxProps> = ({title}) => {
   return (
     <Container>
-     <BoxTitle>{title}</BoxTitle>
+      <BoxTitle>{title}</BoxTitle>
     </Container>
-  )
-}
+  );
+};
 
 export default TitleBox;

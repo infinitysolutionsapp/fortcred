@@ -10,7 +10,7 @@ import ProfileImg from '../../assets/profile.png';
 import CalendarImg from '../../assets/calendar.png';
 import CalculatorImg from '../../assets/calculator.png';
 
-import {Title, Item, Container, ModalContainer, Option, Label} from './styles';
+import {Container, Item, Label, ModalContainer, Option, Title} from './styles';
 
 export default function ItemBox({
   box,
@@ -26,7 +26,7 @@ export default function ItemBox({
       key: '1',
       source: Motocycle,
       label: 'Rota',
-      onPress: CollectionRoute
+      onPress: CollectionRoute,
     },
     {key: '2', source: Cadeado, label: 'Caixa', onPress: BoxClosed},
     {key: '3', source: Despesa, label: 'Despesas', onPress: Expense},

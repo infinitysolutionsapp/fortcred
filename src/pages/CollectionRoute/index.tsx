@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/Header';
-import {View, TouchableOpacity, FlatList} from 'react-native';
+import {FlatList, TouchableOpacity, View} from 'react-native';
 import Calendar from '../../components/Calendar';
 import {
+  EyeIcon,
+  HeaderList,
+  HeaderTitle,
   UserImage,
   ValueName,
-  HeaderTitle,
-  HeaderList,
-  EyeIcon,
   ViewImage,
 } from './styles';
 import House from '../../assets/house.png';

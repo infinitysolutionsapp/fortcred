@@ -4,6 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 interface LabelProps {
   focused: boolean;
 }
+
 export const Container = styled(LinearGradient)`
   width: 60px;
   height: 60px;
