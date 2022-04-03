@@ -33,7 +33,7 @@ const Header: React.FC<TitleBoldProps> = ({
           />
         )}
 
-        {visible ?
+        {visible ? (
           <SearchInput onChangeText={onChangeText} value={value} />
         ) : (
           <>
