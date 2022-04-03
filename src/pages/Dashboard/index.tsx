@@ -132,7 +132,7 @@ const Dashboard: React.FC = () => {
     } else {
       onStartOperationalFlow().then();
     }
-  }, []);
+  }, [box, navigation]);
 
   // console.log('box', box);
 

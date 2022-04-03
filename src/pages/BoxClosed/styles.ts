@@ -4,10 +4,7 @@ interface isNegative {
   price: number;
 }
 
-export const Container = styled.ScrollView.attrs(() => ({
-  showsVerticalScrollIndicator: false,
-  contentContainerStyle: {},
-}))``;
+export const Container = styled.View``;
 
 export const UserDate = styled.Text`
   font-family: 'Lato-Light';
