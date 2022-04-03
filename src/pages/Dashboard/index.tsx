@@ -30,12 +30,17 @@ import {
   MenuContainer,
   IconMenu,
 } from './styles';
+import {useNavigation} from '@react-navigation/native';
 
 const Dashboard: React.FC = () => {
+  const navigation = useNavigation();
+
   const [check, setCheck] = useState(true);
 
   const [profile, setProfile] = useState({});
-  const [box, setBox] = useState({});
+  const [box, setBox] = useState({
+    id: false,
+  });
   const [charges, setCharges] = useState([]);
 
   const loadOperationalFlow = async () => {
@@ -98,9 +103,19 @@ const Dashboard: React.FC = () => {
     setCheck(!check);
   }, [check]);
 
-  const navigateTo = useCallback(() => {
-    Alert.alert('Aviso', 'Fazer navegação');
+  const handleBox = useCallback(() => {
+    if (box.id) {
+      navigation.navigate('BoxClosed', {
+        box: box,
+        onReseteBox: onReseteBox,
+        onStartOperationalFlow: onStartOperationalFlow,
+      });
+    } else {
+      onStartOperationalFlow().then();
+    }
   }, []);
+
+  console.log('box', box);
 
   return (
     <Container>
@@ -117,13 +132,22 @@ const Dashboard: React.FC = () => {
       <SaldoBox>
         <SaldoText>Saldo</SaldoText>
         <SaldoBoxContent>
-          <MoneyBox>R$ {check ? '00000' : '* * * * *'}</MoneyBox>
+          <MoneyBox>
+            {check
+              ? Intl.NumberFormat('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                }).format(box.amount)
+              : 'R$ * * * * *'}
+          </MoneyBox>
           <EyeBox onPress={CheckVisible}>
             <EyeIcon name={check ? 'eye' : 'eye-off'} />
           </EyeBox>
         </SaldoBoxContent>
-        <SeeExtractButton onPress={navigateTo}>
-          <SeeExtractButtonText>VER EXTRATO</SeeExtractButtonText>
+        <SeeExtractButton onPress={handleBox}>
+          <SeeExtractButtonText>
+            {box.id ? 'VER CAIXA' : 'INICAR CAIXA'}
+          </SeeExtractButtonText>
           <SeeExtractButtonIcon />
         </SeeExtractButton>
       </SaldoBox>

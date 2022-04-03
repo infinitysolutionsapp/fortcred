@@ -22,7 +22,12 @@ export default function ItemBox({
   const navigation = useNavigation();
 
   const items = [
-    {key: '1', source: Motocycle, label: 'Rota', onPress: CollectionRoute},
+    {
+      key: '1',
+      source: Motocycle,
+      label: 'Rota',
+      onPress: CollectionRoute
+    },
     {key: '2', source: Cadeado, label: 'Caixa', onPress: BoxClosed},
     {key: '3', source: Despesa, label: 'Despesas', onPress: Expense},
     {
