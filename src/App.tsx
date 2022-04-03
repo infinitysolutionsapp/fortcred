@@ -1,39 +1,54 @@
 import 'react-native-gesture-handler';
-import "intl";
-import "intl/locale-data/jsonp/pt-BR";
+import 'intl';
+import 'intl/locale-data/jsonp/pt-BR';
 // import SplashScreen from 'react-native-splash-screen'
 
 import React from 'react';
-import {StatusBar, Alert} from 'react-native';
-import {NavigationContainer} from "@react-navigation/native";
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
+import {StatusBar, Alert, Platform} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import Profile from './pages/Profile';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import ModulesStack from './routes/Modules.stack.routes';
+import FortButton from './components/FortButton';
+import CollectionRoute from './pages/CollectionRoute';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import SignIn from './pages/SignIn';
-import {createStackNavigator} from "@react-navigation/stack";
-import Home from "./pages/Home";
-import CollectionRoute from "./pages/CollectionRoute";
-import Collection from "./pages/Collection";
-import Expense from "./pages/Expense";
-import BoxClosed from "./pages/BoxClosed";
-import LateCharges from "./pages/LateCharges";
-import Calculate from "./pages/Calculate";
-import Profile from "./pages/Profile";
-import login from "./services/login";
-import { STORE_TOKEN_ACCESS, STORE_DATA_TOKEN, STORE_PROFILE, STORE_TOKEN_REFRESH } from "./utils";
-import getProfile from "./services/profile";
+
+import login from './services/login';
+import {
+  STORE_TOKEN_ACCESS,
+  STORE_DATA_TOKEN,
+  STORE_PROFILE,
+  STORE_TOKEN_REFRESH,
+} from './utils';
+import getProfile from './services/profile';
+
+const {Navigator, Screen} = createBottomTabNavigator();
 
 function SignInScreen() {
   const {signIn} = React.useContext(AuthContext);
 
-  return (
-    <SignIn signIn={signIn}/>
-  );
+  return <SignIn signIn={signIn} />;
 }
 
 const Stack = createStackNavigator();
 const AuthContext = React.createContext();
 
 export default function App() {
+  const icons = {
+    ModulesStack: {
+      lib: AntDesign,
+      name: 'home',
+    },
+    Profile: {
+      lib: AntDesign,
+      name: 'user',
+    },
+  };
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
       switch (action.type) {
@@ -61,7 +76,7 @@ export default function App() {
       isLoading: true,
       isSignout: false,
       userToken: null,
-    }
+    },
   );
 
   React.useEffect(() => {
@@ -91,7 +106,7 @@ export default function App() {
     () => ({
       signIn: async data => {
         try {
-          const { username, password } = data;
+          const {username, password} = data;
           const token = await login(username, password);
 
           await AsyncStorage.setItem(STORE_TOKEN_REFRESH, token.refresh);
@@ -104,16 +119,15 @@ export default function App() {
 
           dispatch({type: 'SIGN_IN', token: 'dummy-auth-token'});
         } catch (e) {
-
           console.log('ERROR', e);
 
-          Alert.alert('Atenção', 'Usuário ou senha inválida!')
+          Alert.alert('Atenção', 'Usuário ou senha inválida!');
         }
       },
       signOut: async () => {
         await AsyncStorage.clear();
 
-        dispatch({type: 'SIGN_OUT'})
+        dispatch({type: 'SIGN_OUT'});
       },
       signUp: async data => {
         // In a production app, we need to send user data to server and get a token
@@ -124,24 +138,29 @@ export default function App() {
         dispatch({type: 'SIGN_IN', token: 'dummy-auth-token'});
       },
     }),
-    []
+    [],
   );
 
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        <StatusBar barStyle="light-content" backgroundColor="#4BAD73" translucent={false}/>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor="#4BAD73"
+          translucent={false}
+        />
 
-        <Stack.Navigator screenOptions={{
-          title: 'Cred Fort',
-          headerTitleAlign: 'center',
-          headerTintColor: "#fff",
-          headerBackTitleVisible: false,
-          headerStyle: {
-            backgroundColor: "#4BAD73",
-          },
-        }}>
-          {state.userToken == null ? (
+        {state.userToken == null ? (
+          <Stack.Navigator
+            screenOptions={{
+              title: 'Cred Fort',
+              headerTitleAlign: 'center',
+              headerTintColor: '#fff',
+              headerBackTitleVisible: false,
+              headerStyle: {
+                backgroundColor: '#4BAD73',
+              },
+            }}>
             <Stack.Screen
               name="SignIn"
               component={SignInScreen}
@@ -149,24 +168,67 @@ export default function App() {
                 animationTypeForReplace: state.isSignout ? 'pop' : 'push',
               }}
             />
-          ) : (
-            <>
-              <Stack.Screen name="Home" component={Home}/>
-              <Stack.Screen name="CollectionRoute" component={CollectionRoute}/>
-              <Stack.Screen name="Expense" component={Expense}/>
-              <Stack.Screen name="Collection" component={Collection}/>
-              <Stack.Screen name="BoxClosed" component={BoxClosed}/>
-              <Stack.Screen name="LateCharges" component={LateCharges}/>
-              <Stack.Screen name="Calculate" component={Calculate}/>
-              <Stack.Screen name="Profile">
-                {props => (<Profile {...props} extraData={{
-                  authContext: AuthContext
-                }}></Profile>)}
-              </Stack.Screen>
-            </>
-          )}
-        </Stack.Navigator>
+          </Stack.Navigator>
+        ) : (
+          <Navigator
+            screenOptions={({route, navigation}) => ({
+              tabBarIcon: ({color, size, focused}) => {
+                if (route.name === 'CollectionRoute') {
+                  return (
+                    <FortButton
+                      focused={focused}
+                      onPress={() => navigation.navigate('CollectionRoute')}
+                    />
+                  );
+                }
+                const {lib: Icon, name} = icons[route.name];
+                return (
+                  <Icon
+                    name={name}
+                    size={size}
+                    color={color}
+                    focused={focused}
+                  />
+                );
+              },
+            })}
+            tabBarOptions={{
+              style: {
+                elevation: 0,
+                shadowOpacity: 0,
+                height: Platform.OS === 'ios' ? 90 : 64,
+                paddingBottom: 8,
+                borderTopWidth: 1,
+                backgroundColor: '#131418',
+                borderTopColor: 'rgba(255,255,255, 0.2)',
+              },
+              labelStyle: {
+                fontSize: 12,
+                fontFamily: 'Roboto-ThinItalic',
+              },
+              activeTintColor: '#FFF',
+              inactiveTintColor: '#999',
+              keyboardHidesTabBar: true,
+            }}>
+            <Screen name="ModulesStack" component={ModulesStack} />
+            <Screen
+              name="CollectionRoute"
+              component={CollectionRoute}
+              options={{title: ''}}
+            />
+            <Screen name="Profile">
+              {props => (
+                <Profile
+                  {...props}
+                  extraData={{
+                    authContext: AuthContext,
+                  }}
+                />
+              )}
+            </Screen>
+          </Navigator>
+        )}
       </NavigationContainer>
     </AuthContext.Provider>
-  )
+  );
 }
