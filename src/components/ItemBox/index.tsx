@@ -3,14 +3,22 @@ import {useNavigation} from '@react-navigation/native';
 import {Alert, Image} from 'react-native';
 
 import Moto from '../../assets/moto.png';
-import Motocycle from '../../assets/motocycle.png';
 import Cadeado from '../../assets/cadeado.png';
 import Despesa from '../../assets/despesa.png';
 import ProfileImg from '../../assets/profile.png';
 import CalendarImg from '../../assets/calendar.png';
 import CalculatorImg from '../../assets/calculator.png';
 
-import {Container, Item, Label, ModalContainer, Option, Title} from './styles';
+import {
+  Container,
+  ImageOption,
+  Item,
+  Label,
+  ModalContainer,
+  Option,
+  Title,
+  ModalContainerScroll,
+} from './styles';
 
 export default function ItemBox({
   box,
@@ -24,7 +32,7 @@ export default function ItemBox({
   const items = [
     {
       key: '1',
-      source: Motocycle,
+      source: Moto,
       label: 'Rota',
       onPress: CollectionRoute,
     },
@@ -107,18 +115,17 @@ export default function ItemBox({
   if (isModal) {
     return (
       <ModalContainer>
-        {items.map(item => (
-          <Option
-            key={item.key}
-            style={{shadowColor: '#000', elevation: 8}}
-            onPress={item.onPress}>
-            <Image
-              source={item.source}
-              style={{tintColor: '#3a3838', height: 30, width: 30}}
-            />
-            <Label>{item.label}</Label>
-          </Option>
-        ))}
+        <ModalContainerScroll>
+          {items.map(item => (
+            <Option
+              key={item.key}
+              style={{shadowColor: '#000', elevation: 8}}
+              onPress={item.onPress}>
+              <ImageOption source={item.source} />
+              <Label>{item.label}</Label>
+            </Option>
+          ))}
+        </ModalContainerScroll>
       </ModalContainer>
     );
   }

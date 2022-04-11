@@ -7,7 +7,9 @@ export const Container = styled.View`
   padding-top: 16px;
 `;
 
-export const ModalContainer = styled.ScrollView.attrs({
+export const ModalContainer = styled.View``;
+
+export const ModalContainerScroll = styled.ScrollView.attrs({
   horizontal: true,
   showsHorizontalScrollIndicator: false,
 })`
@@ -34,6 +36,14 @@ export const Label = styled.Text`
   font-weight: bold;
   margin-top: 8px;
   font-size: 14px;
+`;
+
+export const ImageOption = styled.Image.attrs({
+  resizeMode: 'contain',
+  tintColor: '#3a3838',
+})`
+  height: 30px;
+  width: 30px;
 `;
 
 export const Item = styled.TouchableOpacity.attrs({

@@ -209,7 +209,11 @@ export default function App() {
               inactiveTintColor: '#999',
               keyboardHidesTabBar: true,
             }}>
-            <Screen name="ModulesStack" component={ModulesStack} />
+            <Screen
+              name="ModulesStack"
+              component={ModulesStack}
+              options={{title: 'Início'}}
+            />
             <Screen
               name="CollectionRoute"
               component={CollectionRoute}

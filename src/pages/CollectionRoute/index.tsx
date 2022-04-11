@@ -1,8 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/Header';
-import {FlatList, TouchableOpacity, View} from 'react-native';
+import {Alert, FlatList, TouchableOpacity, View} from 'react-native';
 import Calendar from '../../components/Calendar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {STORE_BOX_OPERATION_FLOW} from '../../utils';
+import startOperationalFlow from '../../services/operational-flow';
+
 import {
   EyeIcon,
   HeaderList,
@@ -19,9 +23,41 @@ import moment from 'moment';
 
 export default function CollectionRoute(props) {
   const navigation = useNavigation();
+  const [box, setBox] = useState({});
   const [charges, setCharges] = useState([]);
   const [spinner, setSpinner] = useState(true);
   // const {box, onStartOperationalFlow, onLoadClientsInRoute} = props.route.params;
+
+  const loadOperationalFlow = async () => {
+    const data = await AsyncStorage.getItem(STORE_BOX_OPERATION_FLOW);
+    setBox({
+      ...JSON.parse(data || '{}'),
+    });
+  };
+
+  const onLoadClientsInRoute = async () => {
+    const data = await getClientsInRoute();
+    try {
+      setCharges([...data]);
+    } catch (e) {}
+  };
+
+  const onStartOperationalFlow = async () => {
+    try {
+      const data = await startOperationalFlow();
+
+      await AsyncStorage.setItem(
+        STORE_BOX_OPERATION_FLOW,
+        JSON.stringify(data),
+      );
+
+      setBox({
+        ...data,
+      });
+    } catch (e) {
+      Alert.alert('', 'Não foi possível iniciar o caixa!');
+    }
+  };
 
   function navigationToCollection(currentCharge) {
     navigation.navigate('Collection', {
@@ -43,6 +79,11 @@ export default function CollectionRoute(props) {
 
   useEffect(() => {
     loadClientsInRoute();
+    onLoadClientsInRoute();
+    loadOperationalFlow();
+    if (box.id) {
+      onStartOperationalFlow();
+    }
   }, []);
 
   const renderItem = ({item, index}) => (
