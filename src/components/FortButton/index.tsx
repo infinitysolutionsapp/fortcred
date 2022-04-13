@@ -1,9 +1,10 @@
 import React from 'react';
 import {
+  Image,
   TouchableWithoutFeedback,
   TouchableWithoutFeedbackProps,
 } from 'react-native';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Moto from '../../assets/moto.png';
 
 import {Container, Label} from './styles';
 
@@ -17,12 +18,12 @@ const FortButton: React.FC<FortButton> = ({onPress, focused}) => {
       <Container
         colors={focused ? ['#FFF', '#CCC'] : ['#00FC6B', '#00AC4A']}
         start={{x: 1, y: 0.2}}>
-        <MaterialIcons
-          name="attach-money"
-          size={30}
-          color={focused ? '#000' : '#FFF'}
+        <Image
+          source={Moto}
+          resizeMode="contain"
+          style={{width: 30, height: 30}}
         />
-        <Label focused={focused}>Caixa</Label>
+        <Label focused={focused}>Rota</Label>
       </Container>
     </TouchableWithoutFeedback>
   );

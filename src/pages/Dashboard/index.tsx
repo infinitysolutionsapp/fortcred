@@ -135,20 +135,22 @@ const Dashboard: React.FC = () => {
   }, [box, navigation]);
 
   // console.log('box', box);
-
+  function goToProfile() {
+    navigation.navigate('Profile');
+  }
   return (
     <Container>
       <Header>
         <Time>
-          {gretting || 'Carregando...'},{'\n'}
+          {gretting},{'\n'}
           <UserName>{profile.full_name}</UserName>
         </Time>
         <HeaderIconContainer>
-          <NotificationIcon />
+          {/* <NotificationIcon />
           <NotificationContainer>
             <NotificationNumber>99+</NotificationNumber>
-          </NotificationContainer>
-          <UserContainer>
+          </NotificationContainer> */}
+          <UserContainer onPress={goToProfile}>
             <UserIcon />
           </UserContainer>
         </HeaderIconContainer>

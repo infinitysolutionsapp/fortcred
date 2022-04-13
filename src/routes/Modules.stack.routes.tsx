@@ -7,10 +7,12 @@ import BoxClosed from '../pages/BoxClosed';
 import LateCharges from '../pages/LateCharges';
 import Calculate from '../pages/Calculate';
 import Dashboard from '../pages/Dashboard';
+import Profile from '../pages/Profile';
 
 const {Navigator, Screen} = createStackNavigator();
 
-const ModulesStackRoutes = () => {
+const ModulesStackRoutes = props => {
+  const {signOut} = React.useContext(props.extraData.authContext);
   return (
     <Navigator screenOptions={{headerShown: false}}>
       <Screen name="Dashboard" component={Dashboard} />
@@ -19,6 +21,16 @@ const ModulesStackRoutes = () => {
       <Screen name="BoxClosed" component={BoxClosed} />
       <Screen name="LateCharges" component={LateCharges} />
       <Screen name="Calculate" component={Calculate} />
+      <Screen name="Profile">
+        {props => (
+          <Profile
+            {...props}
+            extraData={{
+              signOut,
+            }}
+          />
+        )}
+      </Screen>
     </Navigator>
   );
 };

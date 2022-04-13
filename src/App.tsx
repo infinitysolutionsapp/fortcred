@@ -8,7 +8,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Alert, Platform, StatusBar} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import Profile from './pages/Profile';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ModulesStack from './routes/Modules.stack.routes';
 import FortButton from './components/FortButton';
@@ -209,19 +208,9 @@ export default function App() {
               inactiveTintColor: '#999',
               keyboardHidesTabBar: true,
             }}>
-            <Screen
-              name="ModulesStack"
-              component={ModulesStack}
-              options={{title: 'Início'}}
-            />
-            <Screen
-              name="CollectionRoute"
-              component={CollectionRoute}
-              options={{title: ''}}
-            />
-            <Screen name="Profile">
+            <Screen name="ModulesStack" options={{title: 'Início'}}>
               {props => (
-                <Profile
+                <ModulesStack
                   {...props}
                   extraData={{
                     authContext: AuthContext,
@@ -229,6 +218,11 @@ export default function App() {
                 />
               )}
             </Screen>
+            <Screen
+              name="CollectionRoute"
+              component={CollectionRoute}
+              options={{title: ''}}
+            />
           </Navigator>
         )}
       </NavigationContainer>

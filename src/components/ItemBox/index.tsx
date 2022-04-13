@@ -5,7 +5,6 @@ import {Alert, Image} from 'react-native';
 import Moto from '../../assets/moto.png';
 import Cadeado from '../../assets/cadeado.png';
 import Despesa from '../../assets/despesa.png';
-import ProfileImg from '../../assets/profile.png';
 import CalendarImg from '../../assets/calendar.png';
 import CalculatorImg from '../../assets/calculator.png';
 
@@ -50,7 +49,6 @@ export default function ItemBox({
       label: 'Recalcular',
       onPress: goToCalculate,
     },
-    {key: '6', source: ProfileImg, label: 'Perfil', onPress: goToProfile},
   ];
 
   function CollectionRoute() {
@@ -89,10 +87,6 @@ export default function ItemBox({
       box: box,
       onStartOperationalFlow: onStartOperationalFlow,
     });
-  }
-
-  function goToProfile() {
-    navigation.navigate('Profile');
   }
 
   function goToCalculate() {
@@ -167,10 +161,6 @@ export default function ItemBox({
           style={{shadowColor: '#000', elevation: 8}}>
           <Image source={CalculatorImg} width={42} height={42} />
           <Title>Recalcular</Title>
-        </Item>
-        <Item onPress={goToProfile} style={{shadowColor: '#000', elevation: 8}}>
-          <Image source={ProfileImg} width={42} height={42} />
-          <Title>Perfil</Title>
         </Item>
       </Container>
     </>

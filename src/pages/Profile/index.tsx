@@ -29,7 +29,7 @@ const Profile: React.FC = props => {
     loadProfile();
   }, []);
 
-  const {signOut} = React.useContext(props.extraData.authContext);
+  const {signOut} = props.extraData;
 
   const values = {
     full_name: 'Nome',
@@ -42,7 +42,7 @@ const Profile: React.FC = props => {
       <Header name="Perfil" />
 
       <Container>
-        <Title>Minha informações</Title>
+        <Title>Minhas informações</Title>
 
         {Object.keys(values).map(value => {
           return (

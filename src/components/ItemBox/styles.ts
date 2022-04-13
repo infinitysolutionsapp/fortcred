@@ -7,7 +7,9 @@ export const Container = styled.View`
   padding-top: 16px;
 `;
 
-export const ModalContainer = styled.View``;
+export const ModalContainer = styled.View`
+  height: 160px;
+`;
 
 export const ModalContainerScroll = styled.ScrollView.attrs({
   horizontal: true,
