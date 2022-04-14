@@ -13,6 +13,7 @@ import ModulesStack from './routes/Modules.stack.routes';
 import FortButton from './components/FortButton';
 import CollectionRoute from './pages/CollectionRoute';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LateCharges from './pages/LateCharges';
 
 import SignIn from './pages/SignIn';
 
@@ -42,7 +43,7 @@ export default function App() {
       lib: AntDesign,
       name: 'home',
     },
-    Profile: {
+    LateCharges: {
       lib: AntDesign,
       name: 'user',
     },
@@ -222,6 +223,11 @@ export default function App() {
               name="CollectionRoute"
               component={CollectionRoute}
               options={{title: ''}}
+            />
+            <Screen
+              name="LateCharges"
+              component={LateCharges}
+              options={{title: 'Clientes'}}
             />
           </Navigator>
         )}
