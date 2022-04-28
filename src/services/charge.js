@@ -1,6 +1,12 @@
-import getApi, { getApiAuth } from './api';
+import getApi from './api';
 
-export default function registerCharge(box_id, charge_id, amount, action, notes) {
+export default function registerCharge(
+  box_id,
+  charge_id,
+  amount,
+  action,
+  notes,
+) {
   const promise = new Promise(async (resolve, reject) => {
     try {
       const payload = {
@@ -8,11 +14,11 @@ export default function registerCharge(box_id, charge_id, amount, action, notes)
         charge_id: charge_id,
         amount: amount,
         diff_action: action,
-        notes: notes || '-'
+        notes: notes || '-',
       };
 
       const api = await getApi();
-      const response = await api.post(`/register-charge/`, payload);
+      const response = await api.post('/register-charge/', payload);
       resolve(response.data);
     } catch (error) {
       reject(error.response);

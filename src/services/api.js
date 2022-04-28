@@ -1,12 +1,12 @@
 import axios from 'axios';
-import { STORE_TOKEN_ACCESS, STORE_TOKEN_REFRESH } from "../utils";
+import {STORE_TOKEN_ACCESS, STORE_TOKEN_REFRESH} from '../utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Alert } from "react-native";
+import {Alert} from 'react-native';
 
 const defaultOptions = {
   baseURL: 'https://credfort.apps.roove.com.br/api/charges',
   timeout: 30000,
-}
+};
 
 const baseUrl = 'https://credfort.apps.roove.com.br/api';
 
@@ -25,8 +25,8 @@ export default async function getApi() {
   const instance = axios.create({
     ...defaultOptions,
     headers: {
-      'Authorization': `Bearer ${accessToken}`,
-    }
+      Authorization: `Bearer ${accessToken}`,
+    },
   });
 
   instance.interceptors.response.use(
@@ -56,16 +56,15 @@ export default async function getApi() {
               },
             })
             .then(async res => {
-              const { data } = res;
+              const {data} = res;
               const accessToken = data.access;
-              await AsyncStorage.multiSet([
-                [STORE_TOKEN_ACCESS, accessToken],
-              ]);
+              await AsyncStorage.multiSet([[STORE_TOKEN_ACCESS, accessToken]]);
 
               originalReq.headers.Authorization = `Bearer ${accessToken}`;
 
               return axios(originalReq);
-            }).catch((error)=> {
+            })
+            .catch(error => {
               Alert.alert('Sua sessão expirou! Realize login novamente!');
               AsyncStorage.clear().then();
             });

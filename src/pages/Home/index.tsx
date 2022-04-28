@@ -4,15 +4,15 @@ import ProgressCircle from 'react-native-progress-circle';
 import ItemBox from '../../components/ItemBox';
 import Header from '../../components/Header';
 import {
-  Container,
-  DescriptionText,
-  ContainerText,
-  ContainerTextColumn,
-  TextBar,
   BoxStartBox,
-  ButtonStartBox,
   BoxStarted,
   BoxStartedText,
+  ButtonStartBox,
+  Container,
+  ContainerText,
+  ContainerTextColumn,
+  DescriptionText,
+  TextBar,
 } from './styles';
 import {Alert, Text, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';

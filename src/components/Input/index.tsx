@@ -1,11 +1,12 @@
-import React, { useRef, useImperativeHandle, forwardRef } from 'react';
-import { TextInputProps } from 'react-native'
+import React, {forwardRef, useImperativeHandle, useRef} from 'react';
+import {TextInputProps} from 'react-native';
 
-import {maskCurrency} from '../../utils/masks'
+import {maskCurrency} from '../../utils/masks';
+import {Container, Label, TextInput} from './styles';
 
 interface InputProps extends TextInputProps {
-  mask?: "currency" | any;
-  inputMaskChange?: any
+  mask?: 'currency' | any;
+  inputMaskChange?: any;
   label: string;
 }
 
@@ -13,19 +14,19 @@ interface InputRef {
   focus(): void;
 }
 
-import { Container, TextInput,Label } from './styles';
-
-const Input: React.RefForwardingComponent<InputRef, InputProps> = ({ mask, inputMaskChange, label, ...rest }, ref) => {
-
+const Input: React.RefForwardingComponent<InputRef, InputProps> = (
+  {mask, inputMaskChange, label, ...rest},
+  ref,
+) => {
   const inputElementRef = useRef<any>(null);
   useImperativeHandle(ref, () => ({
     focus() {
       inputElementRef.current.focus();
-    }
+    },
   }));
 
-  function handleChange(text:string) {
-    if (mask === "currency") {
+  function handleChange(text: string) {
+    if (mask === 'currency') {
       const value = maskCurrency(text);
       inputMaskChange(value);
     }
@@ -34,18 +35,18 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = ({ mask, input
   return (
     <>
       <Container>
-      <Label>{label}</Label>
+        <Label>{label}</Label>
 
         <TextInput
-        onChangeText={(text: string) => handleChange(text)}
+          onChangeText={(text: string) => handleChange(text)}
           ref={inputElementRef}
           keyboardAppearance="dark"
           placeholderTextColor="#666360"
           {...rest}
         />
-            </Container>
+      </Container>
     </>
   );
-}
+};
 
 export default forwardRef(Input);

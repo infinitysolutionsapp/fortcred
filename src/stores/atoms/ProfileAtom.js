@@ -1,12 +1,12 @@
-import { atom } from 'recoil';
+import {atom} from 'recoil';
 
 const profileState = atom({
   key: 'profile',
   default: {
-    version: {}
+    version: {},
   },
   persistence_UNSTABLE: {
-    type: 'profile'
+    type: 'profile',
   },
 });
 

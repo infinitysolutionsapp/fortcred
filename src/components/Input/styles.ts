@@ -5,15 +5,15 @@ export const Container = styled.View`
 `;
 
 export const TextInput = styled.TextInput`
-
+  color: #000;
   border-bottom-width: 1px;
-  border-bottom-color: #DBDBDB;
+  border-bottom-color: #dbdbdb;
   border-style: solid;
-  padding-bottom:1px;
+  padding-bottom: 1px;
 `;
 
 export const Label = styled.Text`
-font-family: 'Lato-Bold';
-color: #afafaf;
-font-size: 12px;
+  font-family: 'Lato-Bold';
+  color: #afafaf;
+  font-size: 12px;
 `;

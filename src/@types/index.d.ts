@@ -1,3 +1,3 @@
-declare module '*.png'
-declare module '*styled-components/native'
-declare module '*react-intl-currency-input'
+declare module '*.png';
+declare module '*.json';
+declare module '*react-intl-currency-input';

@@ -1,44 +1,36 @@
 import React, {useRef, useState} from 'react';
-import {Alert, Image, TextInput, View} from 'react-native'
-import {useNavigation} from '@react-navigation/native'
-import Button from '../../components/Button'
-import Input from '../../components/Input'
-import BoxTitle from '../../components/TitleBox'
-import Logo from '../../assets/logo.jpg'
+import {Image, TextInput, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import Button from '../../components/Button';
+import Input from '../../components/Input';
+import BoxTitle from '../../components/TitleBox';
+import Logo from '../../assets/logo.jpg';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
-import {
-  Container,
-  ImageContainer,
-  BoxContainer,
-  Box,
-
-} from './styles';
+import {Box, BoxContainer, Container, ImageContainer} from './styles';
 
 // @ts-ignore
 const SignIn: React.FC = ({signIn}) => {
   const navigation = useNavigation();
   const passwordInputRef = useRef<TextInput>(null);
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   function navigateToHome() {
     // navigation.navigate('Home')
-    signIn({username, password})
+    signIn({username, password});
   }
 
   return (
     <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
       <Container>
-
         <ImageContainer>
-          <Image source={Logo}/>
+          <Image source={Logo} />
         </ImageContainer>
 
         <BoxContainer>
-
           <Box>
-            <BoxTitle title="LOGIN"/>
+            <BoxTitle title="LOGIN" />
             <Input
               autoCapitalize="none"
               label="Usuário"
@@ -47,7 +39,7 @@ const SignIn: React.FC = ({signIn}) => {
               value={username}
               onChangeText={setUsername}
             />
-            <View style={{marginTop: 10}}/>
+            <View style={{marginTop: 10}} />
             <Input
               label="Senha"
               ref={passwordInputRef}
@@ -59,9 +51,7 @@ const SignIn: React.FC = ({signIn}) => {
             />
 
             <Button onPress={navigateToHome}>ENTRAR</Button>
-
           </Box>
-
         </BoxContainer>
       </Container>
     </KeyboardAwareScrollView>
