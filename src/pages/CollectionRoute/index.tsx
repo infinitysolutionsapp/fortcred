@@ -59,7 +59,7 @@ export default function CollectionRoute(props) {
     }
   };
 
-  function navigationToCollection(currentCharge) {
+  function navigationToCollection(currentCharge: any) {
     navigation.navigate('Collection', {
       charge: currentCharge,
       box: box,
