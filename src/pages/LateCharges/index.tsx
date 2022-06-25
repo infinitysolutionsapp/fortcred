@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../components/Header';
 import _ from 'lodash';
-import {FlatList, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {
   DebtorAmount,
   EyeIcon,
@@ -13,21 +13,19 @@ import {
   ViewImage,
 } from './styles';
 import House from '../../assets/house.png';
-import {getUnchargedClients} from '../../services/route';
+import getClientsInRoute, {getUnchargedClients} from '../../services/route';
 import Spinner from 'react-native-loading-spinner-overlay';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {STORE_BOX_OPERATION_FLOW} from '../../utils';
+import startOperationalFlow from '../../services/operational-flow';
 
 export default function LateCharges(props) {
   const navigation = useNavigation();
+  const [box, setBox] = useState({});
   const [charges, setCharges] = useState([]);
   const [allCharges, setAllCharges] = useState([]);
   const [spinner, setSpinner] = useState(true);
   const [filterValue, setFilterValue] = useState('');
-
-  const {
-    box,
-    onLoadClientsInRoute,
-    onStartOperationalFlow,
-  } = props.route.params;
 
   const groupsLoan = _.groupBy(charges, 'loan.id');
   const loans = Object.keys(groupsLoan).map(key => {
@@ -44,6 +42,30 @@ export default function LateCharges(props) {
       charges,
     };
   });
+
+  const onLoadClientsInRoute = async () => {
+    const data = await getClientsInRoute();
+    try {
+      setCharges([...data]);
+    } catch (e) {}
+  };
+
+  const onStartOperationalFlow = async () => {
+    try {
+      const data = await startOperationalFlow();
+
+      await AsyncStorage.setItem(
+        STORE_BOX_OPERATION_FLOW,
+        JSON.stringify(data),
+      );
+
+      setBox({
+        ...data,
+      });
+    } catch (e) {
+      Alert.alert('', 'Não foi possível iniciar o caixa!');
+    }
+  };
 
   function navigationToCollection(currentCharge) {
     navigation.navigate('Collection', {
@@ -63,6 +85,20 @@ export default function LateCharges(props) {
     setAllCharges([...uncharged_clients]);
     setSpinner(false);
   };
+
+  const loadOperationalFlow = async () => {
+    const data = await AsyncStorage.getItem(STORE_BOX_OPERATION_FLOW);
+    setBox({
+      ...JSON.parse(data || '{}'),
+    });
+  };
+
+  useEffect(() => {
+    loadOperationalFlow();
+    if (box.id) {
+      onStartOperationalFlow();
+    }
+  }, [box.id]);
 
   useEffect(() => {
     loadClientsInRoute();
