@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import Header from '../../components/Header';
 import _ from 'lodash';
 import {Alert, FlatList, Text, TouchableOpacity, View} from 'react-native';
 import {
@@ -183,12 +182,12 @@ export default function LateCharges(props) {
         }}
       />
 
-      <Header
+      {/* <Header
         name="Cobranças Atrasadas"
         icon="search"
         onChangeText={onFilterChange}
         value={filterValue}
-      />
+      /> */}
 
       <FlatList
         data={_.sortBy(loans, 'customer_name')}

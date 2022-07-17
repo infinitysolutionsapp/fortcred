@@ -173,7 +173,10 @@ export default function Collection(props) {
 
   return (
     <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
-      <Header name="Cobrança" />
+      <Header
+        name="Cobrança"
+        navigateTo={() => navigation.navigate('ChargeStackRoutes')}
+      />
       <Container>
         <CollectionName>{client.name}</CollectionName>
         <PhoneContainer>

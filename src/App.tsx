@@ -11,13 +11,13 @@ import {createStackNavigator} from '@react-navigation/stack';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ModulesStack from './routes/Modules.stack.routes';
 import FortButton from './components/FortButton';
-import CollectionRoute from './pages/CollectionRoute';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LateCharges from './pages/LateCharges';
-
+import ChargeStackRoutes from './routes/charges.stack.routes';
 import SignIn from './pages/SignIn';
-
+import Profile from './pages/Profile';
 import login from './services/login';
+
 import {
   STORE_DATA_TOKEN,
   STORE_PROFILE,
@@ -36,14 +36,13 @@ function SignInScreen() {
 
 const Stack = createStackNavigator();
 const AuthContext = React.createContext();
-
 export default function App() {
   const icons = {
     ModulesStack: {
       lib: AntDesign,
       name: 'home',
     },
-    LateCharges: {
+    Profile: {
       lib: AntDesign,
       name: 'user',
     },
@@ -172,11 +171,11 @@ export default function App() {
           <Navigator
             screenOptions={({route, navigation}) => ({
               tabBarIcon: ({color, size, focused}) => {
-                if (route.name === 'CollectionRoute') {
+                if (route.name === 'ChargeStackRoutes') {
                   return (
                     <FortButton
                       focused={focused}
-                      onPress={() => navigation.navigate('CollectionRoute')}
+                      onPress={() => navigation.navigate('ChargeStackRoutes')}
                     />
                   );
                 }
@@ -220,15 +219,20 @@ export default function App() {
               )}
             </Screen>
             <Screen
-              name="CollectionRoute"
-              component={CollectionRoute}
+              name="ChargeStackRoutes"
+              component={ChargeStackRoutes}
               options={{title: ''}}
             />
-            <Screen
-              name="LateCharges"
-              component={LateCharges}
-              options={{title: 'Clientes'}}
-            />
+            <Screen name="Profile" options={{title: 'Perfil'}}>
+              {props => (
+                <Profile
+                  {...props}
+                  extraData={{
+                    authContext: AuthContext,
+                  }}
+                />
+              )}
+            </Screen>
           </Navigator>
         )}
       </NavigationContainer>

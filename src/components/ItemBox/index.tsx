@@ -57,7 +57,7 @@ export default function ItemBox({
       return;
     }
 
-    navigation.navigate('CollectionRoute', {
+    navigation.navigate('ChargeStackRoutes', {
       box: box,
       onStartOperationalFlow: onStartOperationalFlow,
       onLoadClientsInRoute: onLoadClientsInRoute,

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-import Header from '../../components/Header';
 import {Alert, FlatList, TouchableOpacity, View} from 'react-native';
 import Calendar from '../../components/Calendar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -139,8 +138,8 @@ export default function CollectionRoute(props) {
         }}
       />
 
-      <Header name="Rota cobrança" />
       <Calendar
+        isDateVisible={false}
         date={moment()}
         subtitle={charges_done.length + ' / ' + charges.length}
       />
