@@ -20,7 +20,7 @@ const Calendar: React.FC<CalendarProps> = ({
   return (
     <>
       <ContainerDate>
-        <AntDesignIcon name="calendar" size={32} color="#4BAD73" />
+        <AntDesignIcon name="calendar" size={32} color="#860000" />
         <TextDate>
           {formattedDate} {subtitle ? '(' + subtitle + ')' : ''}
         </TextDate>

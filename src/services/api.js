@@ -4,11 +4,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Alert} from 'react-native';
 
 const defaultOptions = {
-  baseURL: 'https://credfort.infinitysolutionsapp.com/api/charges',
+  baseURL: 'https://fortcred.infinitysolutionsapp.com/api/charges',
   timeout: 30000,
 };
 
-const baseUrl = 'https://credfort.infinitysolutionsapp.com/api';
+const baseUrl = 'https://fortcred.infinitysolutionsapp.com/api';
 
 export function getApiAuth() {
   const instance = axios.create({

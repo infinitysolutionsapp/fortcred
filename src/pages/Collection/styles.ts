@@ -25,7 +25,7 @@ export const PhoneText = styled.Text`
   font-size: 14px;
   line-height: 17px;
   padding-left: 10px;
-  color: #4bad73;
+  color: #860000;
 `;
 
 export const Location = styled.Text`
@@ -33,7 +33,7 @@ export const Location = styled.Text`
   font-size: 14px;
   line-height: 17px;
   padding-left: 10px;
-  color: #4bad73;
+  color: #860000;
   padding-left: 16px;
 `;
 export const LocationContainer = styled.View`

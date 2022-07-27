@@ -49,7 +49,7 @@ export const VersionText = styled.Text`
   font-weight: bold;
   alignItems: center;
   justifyContent: center;
-  color: #4BAD73;
+  color: #860000;
   position: absolute;
   bottom: 10px;
   left: 45%;

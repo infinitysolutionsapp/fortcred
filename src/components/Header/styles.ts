@@ -5,7 +5,7 @@ import Input from '../Input';
 export const Container = styled.View`
   align-items: center;
   flex-direction: row;
-  background-color: #4bad73;
+  background-color: #860000;
   height: 60px;
 `;
 

@@ -11,15 +11,15 @@ export default function ChargeStackRoutes(props) {
     <Navigator
       tabBarOptions={{
         style: {
-          backgroundColor: '#4BAD73',
+          backgroundColor: '#860000',
         },
-        inactiveTintColor: '#000',
+        inactiveTintColor: '#FFF',
         indicatorContainerStyle: {},
         indicatorStyle: {
           backgroundColor: '#FFF',
         },
         activeTintColor: '#FFF',
-        pressColor: '#00AC4A',
+        pressColor: '#CCC',
         labelStyle: {
           fontSize: 12,
           fontFamily: 'Roboto-ThinItalic',

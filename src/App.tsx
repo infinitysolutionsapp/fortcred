@@ -144,19 +144,19 @@ export default function App() {
       <NavigationContainer>
         <StatusBar
           barStyle="light-content"
-          backgroundColor="#4BAD73"
+          backgroundColor="#860000"
           translucent={false}
         />
 
         {state.userToken == null ? (
           <Stack.Navigator
             screenOptions={{
-              title: 'Cred Fort',
+              title: 'Fort Cred',
               headerTitleAlign: 'center',
               headerTintColor: '#fff',
               headerBackTitleVisible: false,
               headerStyle: {
-                backgroundColor: '#4BAD73',
+                backgroundColor: '#860000',
               },
             }}>
             <Stack.Screen

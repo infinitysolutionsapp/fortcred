@@ -9,7 +9,7 @@ export const Container = styled.ScrollView``;
 export const UserDate = styled.Text`
   font-family: 'Lato-Light';
   font-size: 14px;
-  color: #4bad73;
+  color: #860000;
   align-items: center;
   padding: 0px 4px 8px;
 `;

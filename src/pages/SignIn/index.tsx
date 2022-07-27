@@ -25,7 +25,10 @@ const SignIn: React.FC = ({signIn}) => {
     <KeyboardAwareScrollView keyboardShouldPersistTaps="handled">
       <Container>
         <ImageContainer>
-          <Image source={Logo} />
+          <Image source={Logo} style={{
+            width: 200,
+            height: 120
+          }} />
         </ImageContainer>
 
         <BoxContainer>
