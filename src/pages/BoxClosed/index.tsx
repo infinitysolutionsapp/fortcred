@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Alert, FlatList, Text, View} from 'react-native';
 import Calendar from '../../components/Calendar';
 import Button from '../../components/Button';
@@ -19,17 +19,46 @@ import {
   UserPrice,
 } from './styles';
 import Prompt from 'react-native-modal-prompt';
-import {finishOperationalFlow} from '../../services/operational-flow';
+import startOperationalFlow, {finishOperationalFlow} from '../../services/operational-flow';
 import {getMessageErrorRequest} from '../../utils/Message';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {STORE_BOX_OPERATION_FLOW} from "../../utils";
 
 export default function BoxClosed(props) {
-  const {box, onReseteBox} = props.route.params;
+  const {onReseteBox} = props.route.params;
   const [visible, setVisible] = useState(false);
   const navigation = useNavigation();
+  const [box, setBox] = useState(props.route.params.box);
 
   function navigateToHome() {
     navigation.navigate('Home');
   }
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      onStartOperationalFlow();
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
+
+  const onStartOperationalFlow = async () => {
+    try {
+      const data = await startOperationalFlow();
+
+      await AsyncStorage.setItem(
+        STORE_BOX_OPERATION_FLOW,
+        JSON.stringify(data),
+      );
+
+      setBox({
+        ...data,
+      });
+    } catch (e) {
+      Alert.alert('', 'Não foi possível iniciar o caixa!');
+    }
+  };
 
   const charge_records = _.get(box, 'charge_records', []);
   const sum_charge = parseFloat(

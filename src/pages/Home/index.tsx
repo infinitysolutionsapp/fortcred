@@ -21,11 +21,13 @@ import startOperationalFlow from '../../services/operational-flow';
 import {format} from 'date-fns';
 import _ from 'lodash';
 import getClientsInRoute from '../../services/route';
+import {useNavigation} from "@react-navigation/native";
 
 const Home: React.FC = props => {
   const [profile, setProfile] = useState({});
   const [box, setBox] = useState({});
   const [charges, setCharges] = useState([]);
+  const navigation = useNavigation();
 
   const loadOperationalFlow = async () => {
     const data = await AsyncStorage.getItem(STORE_BOX_OPERATION_FLOW);
@@ -76,7 +78,7 @@ const Home: React.FC = props => {
     if (box.id) {
       onStartOperationalFlow();
     }
-  }, []);
+  }, [box]);
 
   const onReseteBox = async () => {
     setBox({});

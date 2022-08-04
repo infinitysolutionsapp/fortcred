@@ -45,6 +45,15 @@ const Dashboard: React.FC = () => {
   });
   const [charges, setCharges] = useState([]);
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      onStartOperationalFlow();
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
+
   const loadOperationalFlow = async () => {
     const data = await AsyncStorage.getItem(STORE_BOX_OPERATION_FLOW);
     setBox({
